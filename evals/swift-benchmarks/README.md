@@ -19,7 +19,7 @@ The SwiftUI/accessibility sources are review fixtures with no app target. Eviden
 
 ## Candidate policy
 
-`suite.json` records 11 individual skills at the researched Git commit, their MIT declaration, resource path and topic scope. Nine are expert Swift skills; two original catalog skills are reference comparisons for generic review/migrations. A candidate is evaluated only on its declared domains; baseline runs on selected cases. Scores across different coverage cannot be compared as overall quality.
+`suite.json` records 19 individual skills at exact Git commits, with MIT declaration, resource path and topic scope. Each of the eight areas has exactly three eligible candidates; some skills cover multiple areas. See the [three-per-area shortlist](shortlist.md) for the selection, source links and labeled language-agnostic controls/specialists. A candidate is evaluated only on its declared domains; baseline runs on selected cases. Scores across different coverage cannot be compared as overall quality.
 
 Candidates are read from explicit local, clean Git checkouts. The runner checks the exact commit, a matching GitHub remote, tracked resource bytes and a tracked MIT license. It rejects symlink resources and unsafe paths. It copies the selected skill plus repository-root references; arbitrary sibling-skill dependencies, plugins and multi-skill orchestration are **not supported**. Audit such dependencies before interpreting a candidate's outcome. No skill is downloaded, installed or updated automatically.
 
@@ -100,3 +100,5 @@ Next useful expansions are deterministic functional oracles, native UI/device fi
 ## Validation completed while creating this pilot
 
 The concurrency library compiled and inventory-validation executed three Swift Testing tests on the installed Swift 6.4 toolchain. Its expected unowned-task warning remains part of the repair fixture. A pinned AvdLee testing source passed provenance checks in a two-repeat dry-run with alternating baseline/candidate order. Automated runner tests use a stub CLI and do not measure any real skill's effectiveness. No paid comparison, simulator audit or winner selection was performed.
+
+Shortlist staging validation: all 19 pinned candidates passed prepared-source provenance/resource checks in a complete Codex-engine dry-run of the 192-row default matrix. This establishes staging compatibility, not execution quality or model availability; no model calls were made.

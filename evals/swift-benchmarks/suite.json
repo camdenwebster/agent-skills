@@ -15,17 +15,6 @@
       ]
     },
     {
-      "id": "hudson-concurrency",
-      "repository": "https://github.com/twostraws/Swift-Concurrency-Agent-Skill",
-      "revision": "bee3f69ba17142da148d3c5406f148ed62592b69",
-      "license": "MIT",
-      "skill_path": "swift-concurrency-pro",
-      "domains": [
-        "concurrency",
-        "testing"
-      ]
-    },
-    {
       "id": "avdlee-concurrency",
       "repository": "https://github.com/AvdLee/Swift-Concurrency-Agent-Skill",
       "revision": "3b1580d8398e0b5408b3bf0bada0e941a1cfc642",
@@ -94,8 +83,7 @@
       "license": "MIT",
       "skill_path": "skills/write-swift",
       "domains": [
-        "concurrency",
-        "testing"
+        "concurrency"
       ]
     },
     {
@@ -105,9 +93,10 @@
       "license": "MIT",
       "skill_path": "skills/code-review-and-quality",
       "domains": [
-        "architecture",
-        "evidence"
-      ]
+        "evidence",
+        "architecture"
+      ],
+      "role": "Language-agnostic review control"
     },
     {
       "id": "catalog-migrations",
@@ -117,7 +106,107 @@
       "skill_path": "skills/deprecation-and-migration",
       "domains": [
         "persistence"
-      ]
+      ],
+      "role": "Language-agnostic migration control"
+    },
+    {
+      "id": "hudson-concurrency-compat",
+      "repository": "https://github.com/twostraws/Swift-Concurrency-Agent-Skill",
+      "revision": "e710f8d577ccbff1ac047aac1594a5683000cb0b",
+      "license": "MIT",
+      "skill_path": "swift-concurrency-pro",
+      "domains": [
+        "concurrency"
+      ],
+      "snapshot_note": "Historical pre-marketplace compatibility snapshot; newer nested symlinks are unsupported by the pilot."
+    },
+    {
+      "id": "hudson-testing-compat",
+      "repository": "https://github.com/twostraws/Swift-Testing-Agent-Skill",
+      "revision": "3d434c7d81f35e5726d4363fc30260735d541c2f",
+      "license": "MIT",
+      "skill_path": "swift-testing-pro",
+      "domains": [
+        "testing"
+      ],
+      "role": "Swift Testing; historical pre-marketplace compatibility snapshot"
+    },
+    {
+      "id": "axiom-testing",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-testing",
+      "domains": [
+        "testing"
+      ],
+      "role": "Native testing topic bundle; local references available"
+    },
+    {
+      "id": "axiom-data",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-data",
+      "domains": [
+        "persistence"
+      ],
+      "role": "Apple persistence bundle with local SQLiteData/GRDB/CloudKit references"
+    },
+    {
+      "id": "axiom-schema-audit",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-audit-database-schema",
+      "domains": [
+        "persistence"
+      ],
+      "role": "Native SQLite/schema audit; strict project policy must govern advice"
+    },
+    {
+      "id": "axiom-run-tests",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-run-tests",
+      "domains": [
+        "evidence"
+      ],
+      "role": "Read-only evidence review candidate; external axbuild is not bundled"
+    },
+    {
+      "id": "axiom-architecture-audit",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-audit-swiftui-architecture",
+      "domains": [
+        "architecture"
+      ],
+      "role": "Native SwiftUI separation/testability audit; distinct from deep module design"
+    },
+    {
+      "id": "catalog-tdd",
+      "repository": "https://github.com/addyosmani/agent-skills",
+      "revision": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "license": "MIT",
+      "skill_path": "skills/test-driven-development",
+      "domains": [
+        "evidence"
+      ],
+      "role": "Language-agnostic proof and verification control"
+    },
+    {
+      "id": "matt-codebase-design",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "license": "MIT",
+      "skill_path": "skills/engineering/codebase-design",
+      "domains": [
+        "architecture"
+      ],
+      "role": "Language-agnostic deep-module/interface specialist"
     }
   ],
   "evals": [
