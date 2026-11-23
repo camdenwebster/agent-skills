@@ -38,10 +38,12 @@ jobs:
         run: node scripts/run-evals.js --min-rank1 95
 
       - name: Validate Swift benchmark suite (no model calls)
-        run: node scripts/run-swift-benchmarks.js --validate
+        run: |
+          node scripts/run-swift-benchmarks.js --validate
+          node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/testing-extension.json --validate
 
       - name: Test Swift comparison runner (stub models only)
-        run: node --test scripts/run-swift-benchmarks-test.js scripts/lib/codex-eval-test.js scripts/lib/workspace-evidence-test.js
+        run: node --test scripts/run-swift-benchmarks-test.js scripts/lib/codex-eval-test.js scripts/lib/codex-model-preflight-test.js scripts/lib/workspace-evidence-test.js scripts/validate-swift-testing-extension-test.js
 
       - name: Validate references/ links in skills
         run: node scripts/validate-reference-links.js

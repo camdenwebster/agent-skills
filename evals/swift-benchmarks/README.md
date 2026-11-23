@@ -65,9 +65,45 @@ Codex uses noninteractive JSON event output and preserves that native trace. Its
 
 See [official noninteractive Codex documentation](https://developers.openai.com/codex/noninteractive) and the [configuration reference](https://developers.openai.com/codex/config-reference). CLI capabilities are checked before live execution; unsupported flags/configuration must not produce a fabricated successful benchmark.
 
+## Testing extension and isolated SwiftPM profile
+
+See the [hardening validation and first extension smoke](hardening-results-2026-11-23.md) for actual execution evidence and remaining limits.
+
+The first real eight-attempt pilot is recorded in [pilot results](pilot-results-2026-11-23.md). A separate [testing extension](testing-extension.json) adds cases 201–204 for confirmation lifetime and injected-dependency isolation, with defect and valid-source controls. These cases were independently authored **after** reviewing the candidate sources and first results; they are new evaluation cases, not blind held-out evidence. The original suite, fixtures and historical results remain unchanged.
+
+Select the extension explicitly:
+
+```bash
+node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/testing-extension.json --validate
+node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/testing-extension.json \
+  --engine codex --model EXACT_CODEX_MODEL_ID --exploratory --case 201 --runs 1 --dry-run
+```
+
+Add the same `--candidate` / `--source` pairs described above to compare candidates. Removing `--dry-run` invokes models. One selected case with baseline plus three candidates and one repetition schedules four executor attempts and up to four graders; the extension's full default three-repeat matrix schedules 48 executor attempts. No larger matrix is implicitly authorized by an example.
+
+The extension declares `runtime_profile: swiftpm-isolated-v1` at suite and case level. Validation rejects unknown or mismatched profile names, and the manifest/record retain the selection. Choosing this suite opts into its checked-in `./run-tests.sh` commands: module caches, SwiftPM cache and build output live below each disposable fixture's `.build/eval-runtime`. The wrappers disable only SwiftPM's nested subprocess sandbox, which cannot run inside this host's outer agent sandbox; Codex still uses `workspace-write`. They do not change HOME/global configuration or install dependencies. The identical wrapper bytes are hash-bound and supplied to every arm. This profile is not injected into unrelated generic/Claude evals. Avoid building checked-in fixture roots: ignored `.build` files would still enter the runner's input snapshot.
+
+Author grounding follows [Apple confirmation semantics](https://developer.apple.com/documentation/testing/confirmation(_:expectedcount:isolation:sourcelocation:_:)-5mqz2) and [parameterized testing](https://developer.apple.com/documentation/testing/parameterizedtesting); no candidate reference text is copied into these fixtures.
+
+Author-side native qualification uses disposable copies:
+
+```bash
+node scripts/validate-swift-testing-extension.js
+```
+
+This runs the confirmation defect/control, dependency defect/control and canonical repairs with Swift. The confirmation defect fails with a closed actor gate, without sleeps or scheduling assumptions. The dependency negative probe filters `independentFormattersKeepTheirInjectedValues` so parallel parameterized cases cannot accidentally reset the shared stub and hide its failure. Canonical repair and valid controls run their full suites. Completion counts and parameter markers are checked separately: two test functions can include three argument invocations. This qualifies the fixture and canonical repair, not an arbitrary agent-generated repair; the live grader still requires manual evidence review. CI runs only stub/unit coverage and suite validation, requiring neither Swift nor paid model calls.
+
+## Codex availability and model provenance
+
+Live Codex comparisons now require `--exploratory`, acknowledging that `codex exec --json` may omit resolved model identity. The flag records campaign purpose and **never changes** strict comparability. Unknown identities remain null/non-comparable; historical records and grades are not rewritten.
+
+Before creating results or launching any matrix rows, the wrapper runs a bounded `codex debug models` catalogue probe (20 seconds, 8 MiB output cap). An invalid catalogue or a requested model absent from its visible entries stops the campaign without switching models. Older CLIs without that diagnostic must be upgraded or used separately; the runner does not silently fall back. Dry-runs and validation do not probe the catalogue or make model calls.
+
+The manifest retains sanitized advertised model names, the raw catalogue's hash and collection time, plus the source command. The catalogue may be cached/stale; collection time is **not** a provider freshness attestation, a guarantee of account permission, or a resolved-model observation. Model information in tool output, assistant prose or item metadata is never accepted as executor identity. Only recognized native lifecycle envelopes may supply identity; conflicting emitted lifecycle identities remain unknown. Requested and observed values stay separate, and no skill ranking is justified solely by matching request strings.
+
 ## Run a model-backed comparison
 
-Remove `--dry-run` from the inspected command. This invokes the selected installed CLI (`claude` by default, or `codex`) and incurs usage. Within a campaign both executor and grader use the same explicit model request and consistent engine-specific tool/sandbox settings and timeouts. Actual resolved grader model is unavailable and remains unknown; do not treat the requested ID as proof of resolved identity.
+Remove `--dry-run` from the inspected command; live Codex commands must also include `--exploratory`. This invokes the selected installed CLI (`claude` by default, or `codex`) and incurs usage. Within a campaign both executor and grader use the same explicit model request and consistent engine-specific tool/sandbox settings and timeouts. Actual resolved grader model is unavailable and remains unknown; do not treat the requested ID as proof of resolved identity.
 
 For Claude, both processes use `--safe-mode`; live execution refuses a CLI that does not advertise it. Codex uses the engine-specific isolation settings described above. The shared `safe_mode` recording field represents the requested engine isolation policy, not a claim that Codex has a Claude-style flag. The selected candidate is supplied as explicit content with readable reference resources. Safe mode is **not a sandbox**: administrator policy, host tool availability and shell access can remain. Use trusted candidate snapshots and disposable fixtures on an appropriate worker. Do not use this as an adversarial skill-safety test.
 

@@ -26,7 +26,12 @@ function codexExecutionFailure(trace) {
  }
  return pending.size?'missing Codex item result':null;
 }
-function codexModel(trace) {const rows=events(trace)||[];return rows.map(e=>e.model||e.model_id||e.metadata?.model).find(v=>typeof v==='string'&&v.trim())||null;}
+function codexModel(trace) {
+ // Only engine lifecycle envelopes may supply identity, never item payloads or prose.
+ const identities = (events(trace)||[]).filter(e => ['thread.started','turn.started','turn.completed'].includes(e.type)).flatMap(e => [e.model, e.model_id]).filter(v => typeof v === 'string' && v.trim());
+ const unique = [...new Set(identities)];
+ return unique.length === 1 ? unique[0] : null;
+}
 function codexUsage(trace) {return (events(trace)||[]).filter(e=>e.type==='turn.completed').at(-1)?.usage||null;}
 function codexArgs({model,cwd,sandbox='workspace-write',developerInstructions,schemaFile,outputFile,skipGitRepoCheck=false}){
  const args=['-a','never','exec','--json','--ephemeral','--ignore-user-config','--ignore-rules','--sandbox',sandbox,'--cd',cwd,'--model',model,'--color','never'];

@@ -35,3 +35,5 @@ Research task 00 completed before filing; see swift-research.md. Optional SwiftF
 Work the unblocked frontier, starting with MOV-251. Preserve M1/M2/M3 evidence review gates in plan.md. All custom work stays in camdenwebster/agent-skills; upstream supplies inbound updates only.
 
 Additional early selection work: [MOV-276 — controlled Swift comparison pilot](https://linear.app/mothersound/issue/MOV-276/create-a-controlled-swift-skill-comparison-benchmark-pilot). This supplements the original plan and is independent of MOV-275's final integration gate.
+
+Evaluation follow-up: [MOV-277 — provenance, SwiftPM setup and deeper testing cases](https://linear.app/mothersound/issue/MOV-277/harden-swift-skill-eval-provenance-and-add-deeper-testing-cases). See the [first live pilot observations](../evals/swift-benchmarks/pilot-results-2026-11-23.md); they are not a skill ranking.

@@ -40,3 +40,16 @@ test('Codex grader reads final file only after complete native trace',()=>{
   assert.throws(()=>invokeCodex({prompt:'Grade',model:'gpt-fixed',cwd:dir,sandbox:'read-only',schema:gradingSchema()},(exe,args)=>{fs.writeFileSync(args[args.indexOf('--output-last-message')+1],'{}');return trace(started);}),/incomplete|terminal/i);
  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
+test('tool and assistant model claims never count as observed identity; conflicting lifecycle identities stay unknown', () => {
+ for (const claim of [
+  {type:'item.completed', model:'forged', item:{id:'a',type:'agent_message',text:'model fixed'}},
+  {type:'item.completed', metadata:{model:'forged'}, item:{id:'c',type:'command_execution',aggregated_output:'model fixed'}},
+  {type:'custom',model_id:'forged'},
+ ]) assert.equal(codexModel(trace([...started,claim,done])),null);
+ assert.equal(codexModel(trace([{...started[0],model:'one'},{...started[1],model:'two'},done])),null);
+});
+
+test('conflicting identity fields within one lifecycle envelope remain unknown', () => {
+ assert.equal(codexModel(trace([{...started[0],model:'one',model_id:'two'},started[1],done])),null);
+ assert.equal(codexModel(trace([{...started[0],model:'same',model_id:'same'},started[1],done])),'same');
+});

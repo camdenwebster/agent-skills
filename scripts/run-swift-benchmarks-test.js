@@ -225,6 +225,7 @@ test('real Codex comparison uses native JSONL records and schema grader with no 
 const fs=require('node:fs');const a=process.argv.slice(2);fs.appendFileSync(${JSON.stringify(calls)},JSON.stringify(a)+'\\n');
 if(a.includes('--help'))console.log('--json --ephemeral --ignore-user-config --ignore-rules --sandbox --output-schema --output-last-message --skip-git-repo-check');
 else if(a.includes('--version'))console.log('codex-test 1.0');
+else if(a[0]==='debug'&&a[1]==='models')console.log(JSON.stringify({models:[{slug:'gpt-fixed',visibility:'list'}]}));
 else {
  if(!a.includes('--ignore-user-config')||!a.includes('never')||a.some(v=>v.includes('dangerously')))process.exit(97);
  console.log(JSON.stringify({type:'thread.started',thread_id:'test-thread',model:'gpt-fixed'}));console.log(JSON.stringify({type:'turn.started'}));
@@ -239,7 +240,7 @@ else {
  const previous=process.env.PATH;
  try{
   process.env.PATH=bin+path.delimiter+previous;
-  const report=runComparison(config(root,{engine:'codex',model:'gpt-fixed',runs:1}));
+  const report=runComparison(config(root,{engine:'codex',exploratory:true,model:'gpt-fixed',runs:1}));
   assert.equal(report.engine,'codex');assert.equal(report.summary[0].passed,1);assert.equal(report.results[0].engine,'codex');assert.equal(report.results[0].observed_executor_model,'gpt-fixed');assert.equal(report.results[0].observed_executor_usage.input_tokens,12);
   const invoked=fs.readFileSync(calls,'utf8').trim().split('\n').map(JSON.parse);const actual=invoked.filter(a=>a.includes('exec')&&!a.includes('--help'));assert.equal(actual.length,2);assert.ok(actual.some(a=>a.includes('workspace-write')));assert.ok(actual.some(a=>a.includes('read-only')));
   const recordFile=fs.readdirSync(path.join(report.output,'0001/harness-results')).find(f=>f.endsWith('.record.json'));const record=JSON.parse(fs.readFileSync(path.join(report.output,'0001/harness-results',recordFile),'utf8'));assert.equal(record.evidence.run.engine,'codex');assert.ok(record.evidence.workspace_evidence.files.some(f=>f.path==='sample/RESULT.md'&&f.text==='Host captured real result'));assert.ok(record.evidence.workspace_evidence.files.some(f=>f.path==='sample/Added.swift'));assert.match(record.evidence.trace,/thread.started/);assert.doesNotMatch(record.evidence.trace,/"subtype":"success"/);
@@ -248,7 +249,7 @@ else {
 
 test('zero-exit truncated Codex record is unscored even beside a valid grade',()=>scratch(root=>{
  fixture(root);
- const report=runComparison(config(root,{engine:'codex',model:'gpt-fixed',runs:1}),{versions:()=>({codex:'test-cli'}),execute({harness,testCase}){
+ const report=runComparison(config(root,{engine:'codex',exploratory:true,model:'gpt-fixed',runs:1}),{versions:()=>({codex:'test-cli'}),modelPreflight:()=>({source:'stub catalogue'}),execute({harness,testCase}){
   const result=path.join(harness,'evals/results');fs.mkdirSync(result,{recursive:true});
   fs.writeFileSync(path.join(result,'swift-benchmark.eval-1.grading.json'),JSON.stringify(grade(testCase.expectations)));
   const skill=fs.readFileSync(path.join(harness,'skills/swift-benchmark/SKILL.md'),'utf8');
@@ -263,3 +264,39 @@ test('engine identity separates otherwise identical model cohorts',()=>{
  const rows=[{...base,engine:'claude'},{...base,engine:'codex'}];
  assert.equal(summarize(rows).length,2);assert.equal(comparisonStatus(rows).comparable,false);assert.ok(comparisonStatus(rows).cases[0].reasons.includes('mixed-engines'));
 });
+
+test('Codex live matrices require explicit exploratory acknowledgement before any work', () => scratch(root => {
+ fixture(root); let probed=false;
+ assert.throws(()=>runComparison(config(root,{engine:'codex'}),{versions(){probed=true;return{};}}),/exploratory/);
+ assert.equal(probed,false); assert.equal(fs.existsSync(path.join(root,'evals/results')),false);
+ assert.equal(parseArgs(['--engine','codex','--model','gpt-fixed','--exploratory']).exploratory,true);
+}));
+test('Codex availability preflight fails before matrix/output and is skipped by dry-run', () => scratch(root => {
+ fixture(root); let executed=false; let probes=0;
+ const opts=config(root,{engine:'codex',exploratory:true,runs:1});
+ const hooks={versions:()=>({codex:'test'}),modelPreflight(){probes++;throw new Error('not listed');},execute(){executed=true;}};
+ assert.throws(()=>runComparison(opts,hooks),/not listed/);assert.equal(executed,false);assert.equal(probes,1);assert.equal(fs.existsSync(path.join(root,'evals/results')),false);
+ runComparison({...opts,dryRun:true},hooks); assert.equal(probes,1);
+}));
+test('runtime profile is explicit known metadata and cannot differ between cases', () => {
+ const s=suite();s.runtime_profile='swiftpm-isolated-v1';s.evals[0].runtime_profile='swiftpm-isolated-v1';validateSuite(s);
+ s.runtime_profile='anything';assert.throws(()=>validateSuite(s),/profile/);
+ s.runtime_profile='swiftpm-isolated-v1';delete s.evals[0].runtime_profile;assert.throws(()=>validateSuite(s),/profile/);
+});
+test('exploratory purpose and catalogue metadata never resolve unknown executor identity', () => scratch(root => {
+ fixture(root);
+ const s=suite();s.runtime_profile='swiftpm-isolated-v1';s.evals[0].runtime_profile=s.runtime_profile;
+ const catalogue={source:'stub CLI catalogue',collected_at:'2026-11-23T00:00:00Z',available_models:['fixed-model']};
+ const report=runComparison(config(root,{suite:s,engine:'codex',exploratory:true,runs:1}),{
+  versions:()=>({codex:'stub'}),modelPreflight:()=>catalogue,
+  execute(context){
+   const result=executor()(context);
+   const dir=path.join(context.harness,'evals/results');const file=path.join(dir,fs.readdirSync(dir).find(f=>f.endsWith('.record.json')));const record=JSON.parse(fs.readFileSync(file,'utf8'));
+   record.evidence.trace=[{type:'thread.started',thread_id:'native'},{type:'turn.started'},{type:'turn.completed'}].map(JSON.stringify).join('\n')+'\n';
+   record.evidence.run.engine='codex';record.evidence.run.executor_model=null;
+   record.sha256=createHash('sha256').update(JSON.stringify(record.evidence)).digest('hex');fs.writeFileSync(file,JSON.stringify(record));return result;
+  }
+ });
+ assert.equal(report.exploratory,true);assert.equal(report.runtime_profile,'swiftpm-isolated-v1');assert.deepEqual(report.model_preflight,catalogue);
+ assert.equal(report.results[0].status,'scored');assert.equal(report.results[0].observed_executor_model,null);assert.equal(report.comparability.comparable,false);assert.ok(report.comparability.cases[0].reasons.includes('unknown-observed-model'));
+}));
