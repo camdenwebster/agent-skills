@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "name": "swift-needs-pilot",
+  "candidates": [
+    {
+      "id": "hudson-swiftui",
+      "repository": "https://github.com/twostraws/SwiftUI-Agent-Skill",
+      "revision": "f2920b63995263f57b3e198674e89a602efba6d2",
+      "license": "MIT",
+      "skill_path": "swiftui-pro",
+      "domains": [
+        "swiftui",
+        "accessibility",
+        "performance"
+      ]
+    },
+    {
+      "id": "hudson-concurrency",
+      "repository": "https://github.com/twostraws/Swift-Concurrency-Agent-Skill",
+      "revision": "bee3f69ba17142da148d3c5406f148ed62592b69",
+      "license": "MIT",
+      "skill_path": "swift-concurrency-pro",
+      "domains": [
+        "concurrency",
+        "testing"
+      ]
+    },
+    {
+      "id": "avdlee-concurrency",
+      "repository": "https://github.com/AvdLee/Swift-Concurrency-Agent-Skill",
+      "revision": "3b1580d8398e0b5408b3bf0bada0e941a1cfc642",
+      "license": "MIT",
+      "skill_path": "skills/swift-concurrency",
+      "domains": [
+        "concurrency"
+      ]
+    },
+    {
+      "id": "avdlee-testing",
+      "repository": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "revision": "798e9b1a2bcac164d4f0c781908199e754f0bab6",
+      "license": "MIT",
+      "skill_path": "swift-testing-expert",
+      "domains": [
+        "testing"
+      ]
+    },
+    {
+      "id": "avdlee-swiftui",
+      "repository": "https://github.com/AvdLee/SwiftUI-Agent-Skill",
+      "revision": "62bd760f005093d1e2e4de5db156e456a5f96400",
+      "license": "MIT",
+      "skill_path": "skills/swiftui-expert-skill",
+      "domains": [
+        "swiftui",
+        "accessibility",
+        "performance"
+      ]
+    },
+    {
+      "id": "ricouard-performance",
+      "repository": "https://github.com/Dimillian/Skills",
+      "revision": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
+      "license": "MIT",
+      "skill_path": "swiftui-performance-audit",
+      "domains": [
+        "performance"
+      ]
+    },
+    {
+      "id": "ricouard-refactor",
+      "repository": "https://github.com/Dimillian/Skills",
+      "revision": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
+      "license": "MIT",
+      "skill_path": "swiftui-view-refactor",
+      "domains": [
+        "swiftui"
+      ]
+    },
+    {
+      "id": "devesa-accessibility",
+      "repository": "https://github.com/dadederk/iOS-Accessibility-Agent-Skill",
+      "revision": "dcc3a36ce1d0099341d545c1af4eb5a8c989bf66",
+      "license": "MIT",
+      "skill_path": "ios-accessibility",
+      "domains": [
+        "accessibility"
+      ]
+    },
+    {
+      "id": "emil-swift",
+      "repository": "https://github.com/emilkowalski/skills",
+      "revision": "64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
+      "license": "MIT",
+      "skill_path": "skills/write-swift",
+      "domains": [
+        "concurrency",
+        "testing"
+      ]
+    },
+    {
+      "id": "catalog-review",
+      "repository": "https://github.com/addyosmani/agent-skills",
+      "revision": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "license": "MIT",
+      "skill_path": "skills/code-review-and-quality",
+      "domains": [
+        "architecture",
+        "evidence"
+      ]
+    },
+    {
+      "id": "catalog-migrations",
+      "repository": "https://github.com/addyosmani/agent-skills",
+      "revision": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "license": "MIT",
+      "skill_path": "skills/deprecation-and-migration",
+      "domains": [
+        "persistence"
+      ]
+    }
+  ],
+  "evals": [
+    {
+      "id": 1,
+      "domain": "concurrency",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/concurrency/PROJECT.md and Lookup.swift. Navigation cancellation is reported as a successful empty result. Make a focused correction without changing the async API, add meaningful tests if Swift is available, and write swift-benchmarks/concurrency/RESULT.md explaining evidence and limits.",
+      "expected_output": "Cancellation propagates, error behavior is explicit and verified without unsafe workarounds.",
+      "files": [
+        "swift-benchmarks/concurrency"
+      ],
+      "expectations": [
+        "The implementation stops swallowing cancellation; CancellationError or an equivalent cancellation path propagates through the existing async throwing API instead of returning an empty success.",
+        "The change does not add Task.detached, unchecked Sendable, nonisolated unsafe escape hatches, blanket MainActor isolation, a dependency, or a changed public API to conceal the issue.",
+        "On a host with a functioning Swift compiler, regression tests for cancellation, a successful result and the existing ordinary-error empty-result fallback are actually added and executed against the corrected implementation. A claim that Swift is unavailable must be grounded in an observed failed capability probe; merely admitting that tests were not run does not satisfy this criterion.",
+        "RESULT.md distinguishes verified behavior from source reasoning; the implementation preserves the documented ordinary provider-error empty-result fallback while propagating cancellation rather than changing unrelated error behavior.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/concurrency/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion. The requested source correction is present in an actual file edit or final diff, not only suggested in the result narrative."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "domain": "concurrency",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/concurrency/IsolatedCounter.swift against PROJECT.md. Write swift-benchmarks/concurrency/RESULT.md with concrete concurrency defects, if any, and remaining verification. Only recommend changes justified by a concrete defect or the stated project constraints.",
+      "expected_output": "The clean actor boundary is recognized without unnecessary isolation changes.",
+      "files": [
+        "swift-benchmarks/concurrency"
+      ],
+      "expectations": [
+        "The review recognizes actor-isolated value mutation and reads as a coherent safe boundary rather than reporting the private value as an unprotected shared-state race.",
+        "No global MainActor conversion, unchecked Sendable, detached task, lock wrapper or architecture rewrite is introduced.",
+        "The response does not claim runtime race testing or compilation without tool evidence and identifies any legitimate limitations conditionally.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/concurrency/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 3,
+      "domain": "testing",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/inventory-validation/README.md. Repair the trimsImportedLabel test so its async assertions belong to the test lifetime. Keep product behavior unchanged, run the repository test command if available, and write swift-benchmarks/inventory-validation/RESULT.md.",
+      "expected_output": "Awaited Swift Testing assertions with real execution evidence, not escaping tasks.",
+      "files": [
+        "swift-benchmarks/inventory-validation"
+      ],
+      "expectations": [
+        "trimsImportedLabel becomes an async test that awaits validate and checks its result within the test lifetime; an unawaited Task, sleep, yield or semaphore is not used as a substitute.",
+        "ImportValidator behavior and public API are preserved; the test is not skipped, disabled, weakened or migrated wholesale to a new framework.",
+        "On a host with a functioning Swift compiler, swift test is actually run and its real executed-test results are described accurately. A claim that the compiler is unavailable must be grounded in an observed failed capability probe; a fabricated pass or unprobed excuse is insufficient.",
+        "Existing serialized-suite tests are retained, and any test failures are distinguished from setup or compiler failures.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/inventory-validation/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 4,
+      "domain": "testing",
+      "kind": "execution",
+      "prompt": "A reviewer claims @Suite(.serialized) only serializes parameterized tests, so the ordinary tests in SerializedSuite.swift still overlap each other. Assess that claim against Swift Testing semantics. Write swift-benchmarks/inventory-validation/RESULT.md; do not change product code.",
+      "expected_output": "Correct suite-level serialization scope, without ordering or global-serialization inventions.",
+      "files": [
+        "swift-benchmarks/inventory-validation"
+      ],
+      "expectations": [
+        "The review rejects the claim: serialized on this suite serializes its contained test functions/subsuites, including these ordinary tests.",
+        "It distinguishes suite application from a nonparameterized individual test, where serialized has no effect, and does not claim unrelated suites become serialized.",
+        "It does not claim a fixed declaration-order guarantee or require replacing the suite with sleeps, locks or global test serialization.",
+        "The conclusion is supported with authoritative documentation or an explicit source/verification limitation, not only author reputation.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/inventory-validation/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        5
+      ]
+    },
+    {
+      "id": 5,
+      "domain": "swiftui",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/swiftui/InventoryList.swift for the report that expanded row state follows the wrong item after sorting/filtering. Make a focused source correction and write swift-benchmarks/swiftui/RESULT.md. Observe PROJECT.md evidence and architecture boundaries.",
+      "expected_output": "Stable model identity with preserved row state and honest runtime limits.",
+      "files": [
+        "swift-benchmarks/swiftui"
+      ],
+      "expectations": [
+        "The review identifies indices as positional identity and changes the iteration to stable item identity rather than index identity or newly generated UUIDs.",
+        "Editable row state and the model id remain stable; the correction does not remove row state, force blanket recreation with id(UUID()), or replace the application architecture.",
+        "The response distinguishes a source-backed likely cause from actual simulator, compile or performance verification; no supplied runtime evidence is invented.",
+        "Verification proposes or performs a focused expand-then-sort/filter scenario that checks state remains attached to the same item.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/swiftui/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion. The requested source correction is present in an actual file edit or final diff, not only suggested in the result narrative."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 6,
+      "domain": "swiftui",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/swiftui/ItemSummary.swift within PROJECT.md. Write swift-benchmarks/swiftui/RESULT.md naming concrete defects, if any. Respect the project architecture and keep this review scoped to concrete defects, if any.",
+      "expected_output": "Clean value-input view recognized without invented issues.",
+      "files": [
+        "swift-benchmarks/swiftui"
+      ],
+      "expectations": [
+        "The reviewer recognizes immutable input values, semantic text styles and a separate View type without inventing a state-ownership defect.",
+        "No view model, shared singleton, observable reference wrapper, third-party state store or fixed-size typography is introduced as mandatory for this view.",
+        "Any remaining accessibility/localization/layout verification is presented as conditional follow-up rather than a reproduced defect or claimed device audit.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/swiftui/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 7,
+      "domain": "accessibility",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/accessibility/DeleteAction.swift against PROJECT.md. Make the smallest native accessibility improvement and write swift-benchmarks/accessibility/RESULT.md with what was verified and what still needs device testing.",
+      "expected_output": "A labeled native action replaces a gesture-only image, with explicit manual-audit limits.",
+      "files": [
+        "swift-benchmarks/accessibility"
+      ],
+      "expectations": [
+        "The image-only tap handler becomes a semantic native Button with a meaningful action label; adding only another gesture, a hint or a decorative image label is not treated as equivalent native control semantics.",
+        "The remove callback remains wired and no fixed font/layout, web ARIA/CSS or blanket touch-only assumptions are introduced.",
+        "The response does not claim VoiceOver, keyboard, Switch Control or automated native audit passed without actual corresponding evidence.",
+        "Follow-up checks include accessible action/focus behavior and relevant iPad keyboard or assistive-technology interaction.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/accessibility/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion. The requested source correction is present in an actual file edit or final diff, not only suggested in the result narrative."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "id": 8,
+      "domain": "accessibility",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/accessibility/SaveAction.swift against PROJECT.md. Write swift-benchmarks/accessibility/RESULT.md. Identify concrete source defects, if any, and keep recommendations scoped to the project constraints.",
+      "expected_output": "Native labeled Button accepted, manual verification kept separate.",
+      "files": [
+        "swift-benchmarks/accessibility"
+      ],
+      "expectations": [
+        "The reviewer recognizes a meaningful labeled native Button and does not report it as an unlabeled image or require replacing it with onTapGesture.",
+        "It does not prescribe ARIA roles, HTML attributes or a custom accessibility action as a mandatory substitute for the native button.",
+        "It keeps manual VoiceOver/keyboard and layout verification unperformed unless actual evidence exists, without claiming the whole screen is accessibility-certified.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/accessibility/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 9,
+      "domain": "persistence",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/persistence/proposed-change.sql against PROJECT.md. The author wants to ship it because its down migration is tested. Write swift-benchmarks/persistence/RESULT.md with a compatible approach; do not change the shipped database or project rules.",
+      "expected_output": "Project sync policy overrides generic expand/contract and destructive rollback advice.",
+      "files": [
+        "swift-benchmarks/persistence"
+      ],
+      "expectations": [
+        "The review rejects renaming a shipped synced column/editing a shipped migration and the unique index because PROJECT.md explicitly prohibits them.",
+        "It proposes a new named additive compatible change or an appropriate application-level mapping, preserving old-device compatibility and defaults.",
+        "It does not require destructive down migrations or eventual drop/rename as a universal completion criterion under this policy.",
+        "Upgrade/data integrity and mixed-version/sync checks are planned, while actual database or CloudKit validation remains unverified.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/persistence/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "id": 10,
+      "domain": "persistence",
+      "kind": "execution",
+      "prompt": "Review swift-benchmarks/persistence/additive-change.sql against PROJECT.md. Write swift-benchmarks/persistence/RESULT.md assessing compatibility and the remaining verification. Do not invent a requirement for destructive rollback or a unique constraint.",
+      "expected_output": "Compatible additive proposal recognized without claiming actual sync validation.",
+      "files": [
+        "swift-benchmarks/persistence"
+      ],
+      "expectations": [
+        "The reviewer recognizes the new named migration and additive nonnull column with a compatible default as consistent with the stated policy.",
+        "It does not demand dropping/renaming columns, editing a shipped migration, adding a unique index or inventing a new synced table registration for this existing-table column change.",
+        "It still calls for real upgrade/data/sync compatibility verification and does not claim those checks ran merely because the SQL looks compatible.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/persistence/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "id": 11,
+      "domain": "evidence",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/evidence/REPORT.md. A teammate wants a green approval now because the shell exited zero. Write swift-benchmarks/evidence/RESULT.md assessing exactly what this bundle supports, what blocks approval and the next checks. Do not attempt an app run.",
+      "expected_output": "Zero-test/incomplete pipeline output rejected as verification evidence.",
+      "files": [
+        "swift-benchmarks/evidence"
+      ],
+      "expectations": [
+        "The response refuses to treat shell status zero and zero passed/failed tests as proof the selected UI tests executed successfully.",
+        "It identifies the formatter pipeline status, stale selection and incomplete/missing artifacts as separate verification concerns and proposes preserving original status plus checking expected nonzero test identities/counts and fresh artifacts.",
+        "It reports the supplied bundle as synthetic evaluation input and does not invent a fresh xcresult, screenshot, simulator result or completed rerun.",
+        "It names concrete next checks without broad cache deletion, simulator erasure or terminating unrelated builds.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/evidence/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "id": 12,
+      "domain": "evidence",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/evidence/COMPLETE.md. Write swift-benchmarks/evidence/RESULT.md about the hypothetical support and limits. Do not dismiss useful evidence simply because it is a simulator, and do not turn the synthetic example into a real verification claim.",
+      "expected_output": "Conditional simulator evidence accepted within its limited scope.",
+      "files": [
+        "swift-benchmarks/evidence"
+      ],
+      "expectations": [
+        "The response conditionally accepts that the stated seven expected passing tests and complete artifacts support the tested simulator flows.",
+        "It does not infer physical-device, manual accessibility, real CloudKit, energy, release-distribution or production confidence from those stated facts.",
+        "It explicitly retains the synthetic/hypothetical status rather than claiming the reviewer ran or inspected real xcresult data.",
+        "It does not impose a fresh identical rerun as necessary solely to repeat already-stated successful checks without a change or unresolved concern.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/evidence/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        5
+      ]
+    },
+    {
+      "id": 13,
+      "domain": "performance",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/performance/PROFILE.md. The owner wants to publish the claimed 55% speedup. Write swift-benchmarks/performance/RESULT.md deciding whether the claim is supported and specifying a focused native measurement plan. Do not profile or modify an app.",
+      "expected_output": "Unmatched synthetic observations are not a measured speedup.",
+      "files": [
+        "swift-benchmarks/performance"
+      ],
+      "expectations": [
+        "The response rejects the claimed measured speedup because device, build configuration, data/cache and interaction conditions differ.",
+        "The repeated-sort observation remains a source-level hypothesis rather than a trace-proven bottleneck or verified fix.",
+        "The measurement proposal holds conditions and workload constant, uses native profiling/metrics with repeated measurements and preserved raw evidence, and compares before/after without web-vitals substitution.",
+        "No runtime trace, optimized build, numerical improvement or physical-device result is invented from the synthetic input.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/performance/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "id": 14,
+      "domain": "performance",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/performance/CONTROL.md. Write swift-benchmarks/performance/RESULT.md reviewing the proposed experiment and any concrete missing context. Do not force a fix when no bottleneck has been measured.",
+      "expected_output": "Sound native experiment recognized without premature optimization.",
+      "files": [
+        "swift-benchmarks/performance"
+      ],
+      "expectations": [
+        "The response recognizes a fair matched-condition repeated-measurement plan rather than asserting it is invalid solely because no universal numeric budget is given.",
+        "It does not demand Lighthouse/Core Web Vitals or replace native metrics with browser loading metrics.",
+        "It does not report a measured defect or improvement without a trace, and keeps any additional metrics/instrument choice tied to the actual symptom and available tools.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/performance/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 15,
+      "domain": "architecture",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/architecture/BRIEF.md and write swift-benchmarks/architecture/RESULT.md with a recommended module boundary and verification strategy. Keep this a design assessment; no app rewrite or new framework.",
+      "expected_output": "Deep capability boundary with explicit dependencies, Sendable values and preserved behavior.",
+      "files": [
+        "swift-benchmarks/architecture"
+      ],
+      "expectations": [
+        "The response explains why Views/ViewModels/Models packages and a shared database singleton do not supply the requested deep capability boundary and recommends query responsibility/interface ownership instead.",
+        "It preserves composition-root dependency ownership, immutable Sendable snapshots, caller-owned cancellation and error propagation without mandating TCA/MVVM or another new framework.",
+        "Verification includes pinned old/new behavior on identical isolated inputs plus independent ordering/filtering invariants, not only compilation or mirroring the new implementation.",
+        "It stays within design scope and does not create a full app/package rewrite or storage migration.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/architecture/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 16,
+      "domain": "architecture",
+      "kind": "execution",
+      "prompt": "Read swift-benchmarks/architecture/CONTROL.md and write swift-benchmarks/architecture/RESULT.md. Assess the proposed boundary and identify concrete unresolved contract details, keeping recommendations within the stated project constraints.",
+      "expected_output": "Clean capability design accepted with focused contract questions.",
+      "files": [
+        "swift-benchmarks/architecture"
+      ],
+      "expectations": [
+        "The response recognizes the explicit injected capability and immutable Sendable boundary as aligned with the stated goals rather than requiring layers/packages named Views/ViewModels/Models.",
+        "Any remaining contract questions are concrete, such as ordering/tie-breaking, cancellation/error semantics or snapshot consistency, rather than mandatory framework adoption.",
+        "It does not claim behavioral equivalence, compilation, actor safety or passing tests were verified from a proposal alone.",
+        "Tool results show the relevant supplied source or evidence files were read and a task-specific RESULT.md was actually written at swift-benchmarks/architecture/RESULT.md; a plausible final narrative without those execution artifacts does not satisfy this criterion."
+      ],
+      "critical_expectations": [
+        1,
+        3,
+        4
+      ]
+    }
+  ]
+}

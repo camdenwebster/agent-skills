@@ -96,6 +96,7 @@ function runBehavioralWithGrading(root, raw, options = {}) {
     require('child_process').execFileSync = (command, args, settings) => {
       if (command !== 'claude') return execute(command, args, settings);
       const executor = args.includes('--output-format');
+      if (${JSON.stringify(Boolean(options.requireSafe))}) assert.ok(args.includes('--safe-mode'), 'executor and grader must use safe mode');
       fs.appendFileSync(${JSON.stringify(path.join(root, 'claude-calls.txt'))}, executor ? 'executor\\n' : 'grader\\n');
       if (executor) { ${options.onExecute || ''} }
       if (executor && ${JSON.stringify(Boolean(options.error))}) throw Object.assign(new Error('executor failed'), ${JSON.stringify(options.error || {})});
@@ -1489,4 +1490,28 @@ test('loads quoted YAML skill identities using their decoded values', () => {
     assert.equal(result.status, 0, result.stdout + result.stderr);
     assert.match(result.stdout, /PASSED/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+// Safe mode is opt-in so existing host workflows retain their current behavior.
+test('safe mode reaches executor and grader and is visible in result metadata', () => {
+  const root = makeSandbox();
+  try {
+    const result = runBehavioralWithGrading(root, passingGrading, { args: ['--safe-mode'], requireSafe: true });
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    const grade = JSON.parse(fs.readFileSync(path.join(root, 'evals/results/alpha-skill.eval-1.grading.json'), 'utf8'));
+    assert.equal(grade.run.safe_mode, true);
+    assert.equal(fs.readFileSync(path.join(root, 'claude-calls.txt'), 'utf8'), 'executor\ngrader\n');
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('historical Codex records cannot silently use the default Claude grader',()=>{
+ const root=makeSandbox();
+ try {
+  const record=path.join(root,'codex.record.json');const rubric=path.join(root,'rubric.json');
+  writeJson(record,{evidence:{run:{engine:'codex'}}});writeJson(rubric,{});
+  const result=run(root,['--regrade',record,'--rubric',rubric,'--dry-run']);
+  assert.notEqual(result.status,0);assert.match(result.stderr,/engine must match/);
+  const bad=run(root,['--behavioral','alpha-skill','--engine','unknown','--dry-run']);
+  assert.notEqual(bad.status,0);assert.match(bad.stderr,/engine must be claude or codex/);
+ }finally{fs.rmSync(root,{recursive:true,force:true});}
 });

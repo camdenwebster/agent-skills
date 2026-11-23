@@ -107,12 +107,12 @@ function gradeRecorded(file, record, ev, model, historical, grade) {
     rubric: ev,
     requested_model: model || null,
     grader_model: 'unknown',
-    claude_version: claudeVersion(),
+    ...(record.evidence.run.engine === 'codex' ? { engine: 'codex', codex_version: (() => { try { return execFileSync('codex', ['--version'], { encoding: 'utf8', timeout: 10000 }).trim(); } catch { return null; } })() } : { claude_version: claudeVersion() }),
     timestamp: new Date().toISOString(),
   };
   let outcome;
   try {
-    outcome = grade(record.evidence.trace, ev, model);
+    outcome = grade(record.evidence.trace, ev, model, record.evidence.workspace_evidence);
     Object.assign(attempt, { status: outcome.grading ? 'graded' : 'invalid', ...outcome });
   } catch (error) {
     attempt.status = 'error';
