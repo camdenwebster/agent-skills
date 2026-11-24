@@ -4,6 +4,11 @@ This is the agent-skills project — a collection of production-grade engineerin
 
 > **Scope:** This file configures agents working on the [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) repository itself, not other projects. Don't copy it into another project or a global agent configuration; the reusable assets are the skills in `skills/`.
 
+## Project-local native workflow
+
+For native iOS/Swift work or native workflow integration, read [the native skill routing contract](docs/native-skill-routing.md) before selecting skills or delegating. Use its role/task mapping and exact checked-in `.agents/skills` paths; the Lead must pass the selected paths and this contract to each delegated native task. This project overlay takes precedence over conflicting generic UI mappings or shared role skill preferences. Web-only work retains the existing routing.
+
+
 ## Project Structure
 
 ```

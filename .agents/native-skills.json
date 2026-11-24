@@ -1,0 +1,679 @@
+{
+  "version": 1,
+  "scope": "project-local; not the distributable root skills catalog",
+  "installed_at": "2026-11-24",
+  "skills": [
+    {
+      "id": "avdlee-concurrency",
+      "repository": "https://github.com/AvdLee/Swift-Concurrency-Agent-Skill",
+      "revision": "3b1580d8398e0b5408b3bf0bada0e941a1cfc642",
+      "skill_path": "skills/swift-concurrency",
+      "license": "MIT",
+      "name": "swift-concurrency",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "8c667b2ff988251c7c291abe046b77d7b8fcfbe3b5ed36961e25e224b1ead491",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "8f5fd8e5cddb015b5627e45e68b256356586144288a4a0a3db87e38bcb0c9155",
+          "executable": false
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "ee6afe3f6c048fa77f73510f5536abc8f399bc48c8641dc308343ed37ee53cfc",
+          "executable": false
+        },
+        {
+          "path": "assets/logo-small.png",
+          "sha256": "f1f69d278df362306d16809151486fad79fc08d6b3018aeabea4580507392f93",
+          "executable": false
+        },
+        {
+          "path": "assets/logo.png",
+          "sha256": "7eeb6005c4ce9d1ab514418cc645c463fa6b84536527dfac715676ee878cf7b1",
+          "executable": false
+        },
+        {
+          "path": "references/_index.md",
+          "sha256": "7e9e076d885ef05402a67aa8a84b83e63a3c29b3d005816f6acb4c30b6d76531",
+          "executable": false
+        },
+        {
+          "path": "references/actors.md",
+          "sha256": "2de7cebbdd1cbc2b7c9312c7b59a3f44ada0456b6e74579aae7fba3e02b0b5fe",
+          "executable": false
+        },
+        {
+          "path": "references/async-algorithms.md",
+          "sha256": "9e16790e9b81850a37b3de995220074491f3efd5accab1f5daa0a633625fed40",
+          "executable": false
+        },
+        {
+          "path": "references/async-await-basics.md",
+          "sha256": "e550aba692af77cf660ad6f754a65c52b01505cad234d159a6d47a919faaf536",
+          "executable": false
+        },
+        {
+          "path": "references/async-sequences.md",
+          "sha256": "33d853118e37c1ac380c253200571efa44fe7127b9b6512ba95b43e670a5f453",
+          "executable": false
+        },
+        {
+          "path": "references/core-data.md",
+          "sha256": "c89c4846fa64a2389abf807684ed373a6c0e6d16351dfa051e1fd71b85444d00",
+          "executable": false
+        },
+        {
+          "path": "references/glossary.md",
+          "sha256": "20dd1f05717810944af675db215d758efa5d1c7b487ee007faae1ec4e2a7c36f",
+          "executable": false
+        },
+        {
+          "path": "references/linting.md",
+          "sha256": "ead994f6e254208acf298a588ad9a49bbd9779530f31e01c74c4d32d06a7bd4a",
+          "executable": false
+        },
+        {
+          "path": "references/memory-management.md",
+          "sha256": "28dcb8a7ff7411390ca0b7f1b0db16d6b00c3705bd6ed1f9b649c476bf0a7554",
+          "executable": false
+        },
+        {
+          "path": "references/migration.md",
+          "sha256": "9115da8228d3a19426869627c28b7ed444f8d783723039293cceb46a1fc1c570",
+          "executable": false
+        },
+        {
+          "path": "references/observation.md",
+          "sha256": "5f08a877b7e29220acbbbec4cecdea5e3a0daa55b4fcdc390d0d46547ac33d8b",
+          "executable": false
+        },
+        {
+          "path": "references/performance.md",
+          "sha256": "dfd74c1c592ce42c520b54a309ba2b50e228608efa055fd6b597067e9ad71668",
+          "executable": false
+        },
+        {
+          "path": "references/sendable.md",
+          "sha256": "af8e026b3c205d3c3acb58bf9a59e456f063f564845f38020a91cac511a08ca8",
+          "executable": false
+        },
+        {
+          "path": "references/tasks.md",
+          "sha256": "0401a762683454149d5ca532684901f4fb5597a6821acacc8d49d037db9a37e9",
+          "executable": false
+        },
+        {
+          "path": "references/testing.md",
+          "sha256": "3df9e839b3338dd473115d9ac8787a42d91b50a537fe40c55cf66d21034679db",
+          "executable": false
+        },
+        {
+          "path": "references/threading.md",
+          "sha256": "0a4e44bd27fdf852cf5f8f5aa64cfe15ba229fb7c885b3f69ed2afdbfac8752a",
+          "executable": false
+        }
+      ]
+    },
+    {
+      "id": "avdlee-testing",
+      "repository": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "revision": "798e9b1a2bcac164d4f0c781908199e754f0bab6",
+      "skill_path": "swift-testing-expert",
+      "license": "MIT",
+      "name": "swift-testing-expert",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "d039eb55cfbaa379d308ff42c1e459dea355edb869ec0a4d6f488759d2156aec",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "8f5fd8e5cddb015b5627e45e68b256356586144288a4a0a3db87e38bcb0c9155",
+          "executable": false
+        },
+        {
+          "path": "references/_index.md",
+          "sha256": "623f23b0e14d363928bfc6b8ed54c89c6d420fde809ee79c0f6e37ed2c4aa965",
+          "executable": false
+        },
+        {
+          "path": "references/async-testing-and-waiting.md",
+          "sha256": "e5f7d016a95d976774d7f26a80be07acf204306aa874f60d6f501aec141c6ceb",
+          "executable": false
+        },
+        {
+          "path": "references/expectations.md",
+          "sha256": "e3d4a57b5d162f49e8f7135e2a020eb1c2af0301782d31c1e4ac3d51a9a0dac5",
+          "executable": false
+        },
+        {
+          "path": "references/fundamentals.md",
+          "sha256": "ad3af7d6ce9a31c2f8222a88baf9a5631de6443d2ad671764e2d183bba7019f3",
+          "executable": false
+        },
+        {
+          "path": "references/migration-from-xctest.md",
+          "sha256": "f94a3bc08fb59358689a84d9d6a2838154dc96904e53457e068d00df5b0671ef",
+          "executable": false
+        },
+        {
+          "path": "references/parallelization-and-isolation.md",
+          "sha256": "209cd458d3fbc8a2830265252714f5ac09abe93100b3b2582034fa7ea1a0568c",
+          "executable": false
+        },
+        {
+          "path": "references/parameterized-testing.md",
+          "sha256": "852ea45d5cae37f3e687050be2cb728370a635129786928cadef4a9dcc8d2c09",
+          "executable": false
+        },
+        {
+          "path": "references/performance-and-best-practices.md",
+          "sha256": "3ecd3da92d2676935863942894e5e9ef649a24b5e56f20f65fc81899297b49c2",
+          "executable": false
+        },
+        {
+          "path": "references/traits-and-tags.md",
+          "sha256": "17dd0b7182f0abdf51f538a6bcc139ef6d501325575476c63a6d5f933312b49e",
+          "executable": false
+        },
+        {
+          "path": "references/xcode-workflows.md",
+          "sha256": "f43407527c30bc1e346d32e4f54a5105a9c61bd071abfbfaa7b91107b4451c94",
+          "executable": false
+        }
+      ]
+    },
+    {
+      "id": "avdlee-swiftui",
+      "repository": "https://github.com/AvdLee/SwiftUI-Agent-Skill",
+      "revision": "62bd760f005093d1e2e4de5db156e456a5f96400",
+      "skill_path": "skills/swiftui-expert-skill",
+      "license": "MIT",
+      "name": "swiftui-expert-skill",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "6fa1d5188176628a00e7f032298e640f5191185904e305983cc8a2fa6e2c31d5",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "8f5fd8e5cddb015b5627e45e68b256356586144288a4a0a3db87e38bcb0c9155",
+          "executable": false
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "48dc200e480dac5598a4b7d3e3635fd5431e21d9dfef77e08b724fbb9871ced0",
+          "executable": false
+        },
+        {
+          "path": "assets/logo-small.png",
+          "sha256": "befad5069b4c95bbb3612e41e2b7fde601de7e022d8cc0d07570f0c7ec234d11",
+          "executable": false
+        },
+        {
+          "path": "assets/logo.png",
+          "sha256": "ab58235e3739a6c83ea8e29f5847ddc65895a6aa3772e17e901dacee101258a6",
+          "executable": false
+        },
+        {
+          "path": "assets/logo.svg",
+          "sha256": "d51b96d6df3ba250f7a47e7d74f9491ab891363e130cdd3f4e35b3fe132178d4",
+          "executable": false
+        },
+        {
+          "path": "references/accessibility-patterns.md",
+          "sha256": "bb942dd3b31fa24aa051943a6b7754a2de45a263dda0da3ac9dc2c7ce43b14d2",
+          "executable": false
+        },
+        {
+          "path": "references/animation-advanced.md",
+          "sha256": "ed395dcc1d26730dd45b166e98442cac008ab4714de70b32f41b23b7a995e8e5",
+          "executable": false
+        },
+        {
+          "path": "references/animation-basics.md",
+          "sha256": "5c6e8911c4011d772db061d3438ec07491bf1c467ab87af4d56e21720a189c9f",
+          "executable": false
+        },
+        {
+          "path": "references/animation-transitions.md",
+          "sha256": "20e5685f50588a48816d2f8d475db82109c528bf603c4a54f4a545f1b914f896",
+          "executable": false
+        },
+        {
+          "path": "references/charts-accessibility.md",
+          "sha256": "772d1c1099a5cc7eef172a206ae60c9269da5d8b6c6a1f885854a1b04f6f619b",
+          "executable": false
+        },
+        {
+          "path": "references/charts.md",
+          "sha256": "32dd76aae9ccfafa817bb5d6862e509ee3966d40653ab28d715348b3859c3158",
+          "executable": false
+        },
+        {
+          "path": "references/document-apps.md",
+          "sha256": "fc392cf67384f3b4ac9be81c49560b7454d0455adef08d75da11779618d3fb1c",
+          "executable": false
+        },
+        {
+          "path": "references/environment-patterns.md",
+          "sha256": "7831c785cd76979075c42efc1ddc2b7a5e4e49c77cd80a7d6887562cd38bf6a5",
+          "executable": false
+        },
+        {
+          "path": "references/focus-patterns.md",
+          "sha256": "35e411675ba93ce92b9b652c804d8349b7f693a9928017b201ae802077e73ab6",
+          "executable": false
+        },
+        {
+          "path": "references/image-optimization.md",
+          "sha256": "1b2fd159a815e4afdf6288341d3a377aa0b5f8d8fc4551c73409bd64228fb806",
+          "executable": false
+        },
+        {
+          "path": "references/iphone-duo.md",
+          "sha256": "f1129c5806860b0d66c9855ab10e964f75c24a98fd8702c1510f64ba4ec2c19f",
+          "executable": false
+        },
+        {
+          "path": "references/latest-apis.md",
+          "sha256": "efc6fc0b133dc0c6c762a65d0c02845d8e6acdb127264978dda7f289db53c802",
+          "executable": false
+        },
+        {
+          "path": "references/layout-best-practices.md",
+          "sha256": "95b8b6df0111301d4ea75c5db7b6eed2cb01bf69c4468b1cde5ef8f90f3298b7",
+          "executable": false
+        },
+        {
+          "path": "references/liquid-glass.md",
+          "sha256": "a96ff9cbd81c37ab268cdba9971b80e7ca7c2e75a141582c60ee78fa334ae89e",
+          "executable": false
+        },
+        {
+          "path": "references/list-patterns.md",
+          "sha256": "2002b89b5c869e54b69f4ab3e61f9a3d715fd6b56a1d5284fe900dc2353f0537",
+          "executable": false
+        },
+        {
+          "path": "references/localization.md",
+          "sha256": "55f5831a3c319fa77997ff164c97051fcc2208f5e9321d1cecb11a0b8473fe5b",
+          "executable": false
+        },
+        {
+          "path": "references/macos-scenes.md",
+          "sha256": "ac464e1f81b97638d799b1482196b553e85a27d7599fe5d571f8e9dad37d1fdf",
+          "executable": false
+        },
+        {
+          "path": "references/macos-views.md",
+          "sha256": "a82101901fadee2f6cf7b1400fedaea73bab0a07f5aafef38631cdaeee6af63d",
+          "executable": false
+        },
+        {
+          "path": "references/macos-window-styling.md",
+          "sha256": "0c9fc677599d5488e9c58a05d6a5a4a61001d439db4cf7626c222601493437bf",
+          "executable": false
+        },
+        {
+          "path": "references/modifier-patterns.md",
+          "sha256": "24d08e954398da0787e8dbac764bb20c53447e33260cf890c025fc915c2037cc",
+          "executable": false
+        },
+        {
+          "path": "references/performance-patterns.md",
+          "sha256": "2e2643503ae283f2a99f31b5a97abbf141d15c61f1c6271640cfef9333940818",
+          "executable": false
+        },
+        {
+          "path": "references/previews.md",
+          "sha256": "fdf50f169607ddb7e9c03218957df2b2d733e211f591ac86c99816ca058ede01",
+          "executable": false
+        },
+        {
+          "path": "references/scroll-patterns.md",
+          "sha256": "a85f576ef2bce2d9128b92d8aad7c72348ebeb70bb3acf0184359414d156b850",
+          "executable": false
+        },
+        {
+          "path": "references/sheet-navigation-patterns.md",
+          "sha256": "48349b929e54bf2bbc7213cc20af8bb56d2bfa5de452b58a3ea9056dbb2d8ef6",
+          "executable": false
+        },
+        {
+          "path": "references/soft-deprecation.md",
+          "sha256": "ac907d3729e75747c6b19e9cc6a911337c05b8ff1c25695495ce7cda9d2f5548",
+          "executable": false
+        },
+        {
+          "path": "references/state-management.md",
+          "sha256": "48e51e8adedb0183c72c156a19aea5503014ebc159da4bb9a4a1359336048b33",
+          "executable": false
+        },
+        {
+          "path": "references/styled-text-editing.md",
+          "sha256": "f8dc9bb560107ff8f9e286e3876929f0285c2548195e0c7dda0daa6de70e58fd",
+          "executable": false
+        },
+        {
+          "path": "references/text-patterns.md",
+          "sha256": "26b960e9c8c7f5e15e9b2e297b6bd36eb872ec4ab8a0a84f61aa9c64d50191b8",
+          "executable": false
+        },
+        {
+          "path": "references/toolbar-patterns.md",
+          "sha256": "e57a64be79177888325ece20a4f7cf74d0b2d8d7793b7a2cf8f20ed347bfb1a1",
+          "executable": false
+        },
+        {
+          "path": "references/trace-analysis.md",
+          "sha256": "9f918c023bacf90595b6b078ecf5d62d8df3a4493cd4f2b3ca87f5361144e95d",
+          "executable": false
+        },
+        {
+          "path": "references/trace-recording.md",
+          "sha256": "26fa85302340800af67cb89902c1c95920f387f8d0fafd08cc97ecc19f43fbfc",
+          "executable": false
+        },
+        {
+          "path": "references/view-structure.md",
+          "sha256": "9e38aebe65bb9576ee6d2a41613943f7f790783c3fd795d23850e2158035df1d",
+          "executable": false
+        },
+        {
+          "path": "references/webkit-integration.md",
+          "sha256": "73a893af77b52c05b3ea8e3e378c82bb9066cb887a2ab7485ec128bb95ba9541",
+          "executable": false
+        },
+        {
+          "path": "scripts/analyze_trace.py",
+          "sha256": "28b18e2084d22ed43405de44798941c07443f5cd7b828e243a073546814b8519",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/__init__.py",
+          "sha256": "fdf7c99bed236e0fb71524b155be864a00a71af4997d6848c6c33f49fce62861",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/causes.py",
+          "sha256": "cf6e067e5f47130562522ed27ca4f2551d0b2de669b5063db950e220e19cbd1f",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/correlate.py",
+          "sha256": "c4bd0c6d14cc96e03cf058ae134c661ace6de5d9b95d417e742278a9c86d064b",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/events.py",
+          "sha256": "e389fed14c398732aadb04bddeed399d4856eca24741396e3c845d4a4a95be57",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/hangs.py",
+          "sha256": "af779727b7342186606021acad8f38dfb88778ee068a95d0a9b119f415bc5162",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/hitches.py",
+          "sha256": "39c4a6d96fa4447709eeff98f033a2a6cac1a70b205fd543b7711e1d4759dd2f",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/summary.py",
+          "sha256": "dc856a29008aa2218cf30fc82db133f75efc1f67580b27fb3077f17ccc365296",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/swiftui.py",
+          "sha256": "f499b222b24c2129208284ccc61d6d0ac27bfe67831a5f7db51848f83d20fdd5",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/time_profiler.py",
+          "sha256": "dd3ab3f6e8e41b8ad00bbbd38ac96ada12a945bd82e51c923ac912fc46bff9b6",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/xctrace.py",
+          "sha256": "aea84c39cb9edc4e28ed3e57a974bd2d88097e0bc8985f46231ab569595441fb",
+          "executable": false
+        },
+        {
+          "path": "scripts/instruments_parser/xml_utils.py",
+          "sha256": "f0f4476f0f1f0ce9ad5779509b59c2c77b0f7438a57d358aa76e715e7a23b4d6",
+          "executable": false
+        },
+        {
+          "path": "scripts/record_trace.py",
+          "sha256": "7d9c33de1146a274f6ca45790a25f4421ea697893e18a0a6b2ccfb401e245891",
+          "executable": false
+        }
+      ]
+    },
+    {
+      "id": "ricouard-performance",
+      "repository": "https://github.com/Dimillian/Skills",
+      "revision": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
+      "skill_path": "swiftui-performance-audit",
+      "license": "MIT",
+      "name": "swiftui-performance-audit",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "6cfb3f9f3e1938aca3eb1cf3ac9f265cca15559b0c9b3dcd3ab2e580be3cea2f",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "df17aae89ce4705d0a6e5f7b46eeea3b9023967ecad948f8779b47039eb55a8b",
+          "executable": false
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "64d8aba830402802fe9d01bdea7745ab249eae0e734e248c3c348c899a79ab9a",
+          "executable": false
+        },
+        {
+          "path": "references/code-smells.md",
+          "sha256": "c9834da9bde40952100147c7fa0dab12c21bcd762878da7c07b6cd260093ebb8",
+          "executable": false
+        },
+        {
+          "path": "references/demystify-swiftui-performance-wwdc23.md",
+          "sha256": "7cffafe3903293479b73f71d822fe5209d307645d55f18d4fbbdf90a5f708d52",
+          "executable": false
+        },
+        {
+          "path": "references/optimizing-swiftui-performance-instruments.md",
+          "sha256": "f3980f725406cd4158ace27e058b7b7a57478025f48d50512e99a20f9fa0fa9b",
+          "executable": false
+        },
+        {
+          "path": "references/profiling-intake.md",
+          "sha256": "636ae046936183a7ac5412458926d0a8babe4e05396955d3608f9a7320913bcd",
+          "executable": false
+        },
+        {
+          "path": "references/report-template.md",
+          "sha256": "c09e67323c3c0ebcacd647be9117f258d11ec58001ba0e5683c13c2bc4d21ff2",
+          "executable": false
+        },
+        {
+          "path": "references/understanding-hangs-in-your-app.md",
+          "sha256": "3631b56751e5853fd04c1397f7cc5eb9f8d7f057a83509244fa82a4b57fc56fc",
+          "executable": false
+        },
+        {
+          "path": "references/understanding-improving-swiftui-performance.md",
+          "sha256": "fd7a624c10af787c5673b748dee95d789ead1329e69f6471a9495682d0775643",
+          "executable": false
+        }
+      ]
+    },
+    {
+      "id": "devesa-accessibility",
+      "repository": "https://github.com/dadederk/iOS-Accessibility-Agent-Skill",
+      "revision": "dcc3a36ce1d0099341d545c1af4eb5a8c989bf66",
+      "skill_path": "ios-accessibility",
+      "license": "MIT",
+      "name": "ios-accessibility",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "24d78ca5a2b2d191b9dd7069b7eb5a4ab36c2586f91b998b32a59cd86a348db8",
+          "executable": false
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "5a393f8c79a33f8c95cfd044209f320210666a17204b33436c629e92847d4135",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "24d78ca5a2b2d191b9dd7069b7eb5a4ab36c2586f91b998b32a59cd86a348db8",
+          "executable": false
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "47b1eb1a24ed7b574475a8689496f2d4bc32c7083e38535a98b1cfbf4c7beef1",
+          "executable": false
+        },
+        {
+          "path": "references/concepts-and-culture.md",
+          "sha256": "36974bb64bc739a4565fc323144d71754ccf37f976cece47d5c1cfb7bbc0d9ab",
+          "executable": false
+        },
+        {
+          "path": "references/dynamic-type-swiftui.md",
+          "sha256": "564809697c36b353858a290e5ae55f9ff1030463dde6d97c98ddcf3e2baefaae",
+          "executable": false
+        },
+        {
+          "path": "references/dynamic-type-uikit.md",
+          "sha256": "082c9fafaedb483be1831b5ef614a6e9d4c301596a5ffb9dbc89f5b3a28ee147",
+          "executable": false
+        },
+        {
+          "path": "references/dynamic-type.md",
+          "sha256": "89057ee21c7f68e096562c03fc455bbaa4cce396b0835fcff8fa1b7c569fbc0d",
+          "executable": false
+        },
+        {
+          "path": "references/full-keyboard-access.md",
+          "sha256": "4c516892695a89563126e6d952444343fb9ae751620813cafb942e5c92c6dcb8",
+          "executable": false
+        },
+        {
+          "path": "references/glossary.md",
+          "sha256": "320da64f94ab4a451764bfc4ecd9970c08247f542ec9ae56440ad0a5bf1cbc06",
+          "executable": false
+        },
+        {
+          "path": "references/good-practices.md",
+          "sha256": "323f56e83e9f2897708761626fcda6bd4452f2b1b2629d9e8d32cc39cee63391",
+          "executable": false
+        },
+        {
+          "path": "references/playbook.md",
+          "sha256": "fc1d77b7a1f94f7ef1604722e33108186874f325b854f960a8ee4c9275c0807b",
+          "executable": false
+        },
+        {
+          "path": "references/resources.md",
+          "sha256": "6dd843d9e17ae04b1dc289ad8b433ecfce90331f14d98064f5e23dd0db15607b",
+          "executable": false
+        },
+        {
+          "path": "references/switch-control.md",
+          "sha256": "3dcf9f43f6bcad874a0d54c5a2023f4785b5b26badeb6c5dbb3086806876bb4c",
+          "executable": false
+        },
+        {
+          "path": "references/testing-automated.md",
+          "sha256": "ddd9ad9744df8c76a708be67fcfbbd9990ec6d651ed7726441455079a707bce7",
+          "executable": false
+        },
+        {
+          "path": "references/testing-manual.md",
+          "sha256": "a04a836c180481c73982eac9dbb090929d85087aba7317c31d13bf5bb41df3a8",
+          "executable": false
+        },
+        {
+          "path": "references/voice-control.md",
+          "sha256": "1e38ba2d507cb718f2bc095867d75ab2cef9557429778934818b1bee06b9900f",
+          "executable": false
+        },
+        {
+          "path": "references/voiceover-swiftui.md",
+          "sha256": "5213730e81428350496b49f9864da23e5e9b283e89ed08f7b6124c77106c61fe",
+          "executable": false
+        },
+        {
+          "path": "references/voiceover-uikit.md",
+          "sha256": "bc62856e99f93d30c9448e0d2de94fd4b773b0ae2179afe28c081047ec6be4ca",
+          "executable": false
+        },
+        {
+          "path": "references/voiceover.md",
+          "sha256": "6b4bf161aa141ca31d7e3a5f40aac55237ee8f8500847d0f7f14512411d6dcde",
+          "executable": false
+        }
+      ]
+    },
+    {
+      "id": "matt-codebase-design",
+      "repository": "https://github.com/mattpocock/skills",
+      "revision": "abeeaf95660ba9e8b7c753eb38f441ca707a8823",
+      "skill_path": "skills/engineering/codebase-design",
+      "license": "MIT",
+      "name": "codebase-design",
+      "license_source": "LICENSE",
+      "license_file": "UPSTREAM-LICENSE.txt",
+      "files": [
+        {
+          "path": "DEEPENING.md",
+          "sha256": "f3dd099ce99289bd213914d8ee3e2429b78309c3957ca4583f7659551b1d53c1",
+          "executable": false
+        },
+        {
+          "path": "DESIGN-IT-TWICE.md",
+          "sha256": "c222ab5a82e0405672eb9062d62496139a08828e45d07fc5f18e4952c10fac1a",
+          "executable": false
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "2c20617f87ec8af6a434859f381b2f061a69b530444e74eb39e78bb016a6d1e2",
+          "executable": false
+        },
+        {
+          "path": "UPSTREAM-LICENSE.txt",
+          "sha256": "0e7ac423bf2c6e223b7c5b156f8cf72da49d748e56a1641402c31f22ad07dbb5",
+          "executable": false
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "edebc9e4fcfe102114012575eaa9600b9b5fd08c311664f389c36e7bc717740f",
+          "executable": false
+        }
+      ]
+    }
+  ]
+}

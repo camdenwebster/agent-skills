@@ -1,5 +1,7 @@
 # Agent Skills
 
+This fork also has a [project-local native workflow](docs/native-skill-routing.md): six pinned Swift/iOS specialists are routed by task for agents working in this checkout. This is separate from the reusable root plugin catalog.
+
 **Production-grade engineering skills for AI coding agents.**
 
 Skills encode the workflows, quality gates, and best practices that senior engineers use when building software. These ones are packaged so AI agents follow them consistently across every phase of development.

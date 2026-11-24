@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Verify project-local native skill resources and routing
+        run: |
+          node scripts/validate-native-skills.js
+          node --test scripts/validate-native-skills-test.js
+
       - name: Validate all skills
         run: node scripts/validate-skills.js
 
@@ -121,6 +126,12 @@ jobs:
           scripts/floor-guard-reference-test.js
           scripts/quality-gate-test.js
           scripts/staged-secret-scan-test.js
+
+      - name: Verify project-local native skill resources and routing
+        if: runner.os != 'Windows'
+        run: |
+          node scripts/validate-native-skills.js
+          node --test scripts/validate-native-skills-test.js
 
       - name: Validate all skills
         run: node scripts/validate-skills.js

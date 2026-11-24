@@ -17,7 +17,7 @@ This is a qualitative selection, not a measured winner claim. It uses the 19 exa
 
 These six are the starting collection, loaded by task rather than all injected into every session. Keep the catalog's existing review/TDD workflows as the process foundation. Add selected Axiom Data and Run Tests references on demand for persistence and native evidence. Apple SDK/compiler documentation and the consuming project's rules remain authoritative. For MovingBox specifically, SQLiteData/SyncEngine registration and additive schema rules override generic migration advice.
 
-Selection does not install, vendor or activate these skills. During integration, preserve applicable license notices, retain exact revisions, inspect required helper resources, and reconcile project rules before enabling routing. Existing globally installed skills are unchanged.
+The six primary selections are now installed project-locally under `.agents/skills/`, with exact source pins, supporting resources and MIT notices. [The active routing contract](../docs/native-skill-routing.md) connects them to this checkout's Lead/Architect/Coder/Reviewer/QA workflow through AGENTS.md and CLAUDE.md. Claude discovery links share the canonical copies. Global/shared role installations and the distributable root plugin catalog are unchanged; optional alternatives below remain references, not new installs.
 
 ## Each shortlisted skill
 

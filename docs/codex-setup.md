@@ -20,6 +20,10 @@ codex plugin marketplace add /path/to/your/clone
 codex plugin add agent-skills@agent-skills
 ```
 
+## This fork's project-local native workflow
+
+When working in this checkout, six pinned native specialists are also installed under `.agents/skills/`. Follow the [native role/task routing contract](native-skill-routing.md) and its exact paths. This is separate from installing the root plugin into another project: plugin consumers do not receive this local collection automatically. Global same-name skills may still appear; do not infer which source loaded from its name alone.
+
 ## Usage
 
 After install, invoke a skill in Codex chat with `@` (e.g. `@spec-driven-development`) or just describe the task and let Codex pick the right skill. All 26 skills under `skills/` are available.
