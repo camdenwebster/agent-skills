@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "name": "swift-multifile-testing-v1",
+  "runtime_profile": "swiftpm-isolated-v1",
+  "artifact_profile": "inventory-import-tests-v1",
+  "candidates": [
+    {
+      "id": "avdlee-testing",
+      "repository": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "revision": "798e9b1a2bcac164d4f0c781908199e754f0bab6",
+      "license": "MIT",
+      "skill_path": "swift-testing-expert",
+      "domains": [
+        "testing"
+      ]
+    },
+    {
+      "id": "hudson-testing-compat",
+      "repository": "https://github.com/twostraws/Swift-Testing-Agent-Skill",
+      "revision": "3d434c7d81f35e5726d4363fc30260735d541c2f",
+      "license": "MIT",
+      "skill_path": "swift-testing-pro",
+      "domains": [
+        "testing"
+      ],
+      "role": "Swift Testing; historical pre-marketplace compatibility snapshot"
+    },
+    {
+      "id": "axiom-testing",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-testing",
+      "domains": [
+        "testing"
+      ],
+      "role": "Native testing topic bundle; local references available"
+    }
+  ],
+  "evals": [
+    {
+      "id": 401,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "artifact_profile": "inventory-import-tests-v1",
+      "prompt": "Read swift-benchmarks/inventory-import/README.md and all supplied product source files. Write meaningful deterministic async Swift Testing regressions across the documented import boundaries and required scenarios. Product implementation is correct; preserve every supplied file and add only swift-benchmarks/inventory-import/Tests/InventoryImportTests/GeneratedRegressionTests.swift plus required swift-benchmarks/inventory-import/RESULT.md. Both added files must be UTF-8 and at most 64 KiB each. Use plain import InventoryImport and only public APIs: no @testable or private/internal access, conditional compilation/directives, skipped tests, enabled/disabled traits, conditional discovery or known-issue annotations. Test code must remain hermetic with no host process, network, filesystem/environment or unsafe/runtime APIs. The conservative lexical audit can flag comments or strings; flags mean unqualified evidence, not proof of malicious intent. Do not stage or commit. Use the supplied run-tests.sh command, at most three native test invocations within the 15-minute task budget. Record actual native test completion and any verification limitations in RESULT.md.",
+      "expected_output": "Deterministic public API regressions verify concurrent import identity/order, callback payloads, atomic failure, cancellation ownership and concurrent-run isolation without changing supplied files.",
+      "files": [
+        "swift-benchmarks/inventory-import"
+      ],
+      "expectations": [
+        "The generated tests deterministically control independent catalog requests, including duplicate SKUs with distinct source identities, and acknowledge a non-input completion order. They assert complete resolved-event payloads/counts and input-ordered report, single commit and committed payload equality.",
+        "A late invalid row is checked with exact ordered validation issues, an unchanged seeded store snapshot, zero commit attempts and no committed event. Assertions protect the validation/persistence boundary without altering product behavior.",
+        "Cancellation is exercised while at least two requests are known suspended. Test-owned work is released and joined before inspecting synchronous cancellation-handler flags for all active requests (without waiting indefinitely for flags), and assertions require CancellationError plus no persistence or committed event. Handshakes and cleanup replace sleeps, polling, randomness or assumptions about task scheduling.",
+        "A controlled catalog dependency failure preserves its sentinel error and prevents persistence/completion. Overlapping runs on the same importer deliberately interleave work and assert separate callback sinks, identities, counts, reports and per-batch commit contents without requiring a global commit order.",
+        "Only the permitted new test file and required RESULT.md are added; all supplied files and existing smoke coverage remain unchanged, with no staging or commits. The supplied command is actually run within the budget and evidence accurately distinguishes completed enabled Swift Testing tests from zero-test XCTest output, skips, hangs or setup failures. All spawned test work is owned and cleaned up; tests remain hermetic public API coverage with no process execution, network calls, filesystem/environment introspection, runtime manipulation or discovery changes from test code."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ]
+}

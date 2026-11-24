@@ -37,7 +37,7 @@ const { codexExecutionFailure, codexModel, invokeCodex, gradingSchema } = requir
 const { captureWorkspaceEvidence } = require('./lib/workspace-evidence');
 const { stageSkillResources } = require('./lib/skill-resources');
 const { execFileSync } = require('child_process');
-const { saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged } = require('./lib/behavioral-record');
+const { saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged, INVENTORY_IMPORT_ARTIFACT_PROFILE } = require('./lib/behavioral-record');
 
 const ROOT = path.join(__dirname, '..');
 const SKILLS_DIR = path.join(ROOT, 'skills');
@@ -634,6 +634,7 @@ function runBehavioral(skillName, dryRun, { record = false, model, evalId = null
     process.exit(1);
   }
   if (record) d.evals.forEach(validateEval);
+  else d.evals.filter(ev => ev.artifact_profile !== undefined).forEach(validateEval);
   const duplicateIds = duplicateEvalIds(d.evals);
   if (duplicateIds.length) {
     console.error(`"${skillName}" has duplicate behavioral eval id=${duplicateIds.join(', ')}; each grading slot needs a unique id`);
@@ -726,6 +727,10 @@ function runBehavioral(skillName, dryRun, { record = false, model, evalId = null
       continue;
     }
     const workspaceEvidence = kind === 'execution' ? captureWorkspaceEvidence(workspace, baselineCommit) : null;
+    if (workspaceEvidence && ev.artifact_profile === INVENTORY_IMPORT_ARTIFACT_PROFILE) {
+      const { captureInventoryImportSubmission } = require('./lib/inventory-import-submission');
+      workspaceEvidence.inventory_import_submission = captureInventoryImportSubmission(workspace, baselineCommit);
+    }
     if (workspaceEvidence) fs.writeFileSync(`${base}.workspace-evidence.json`, JSON.stringify(workspaceEvidence, null, 2) + '\n', { mode: 0o600 });
     const saved = record ? saveRecord(base, {
       skill_name: skillName, skill_text: skillText, eval: ev, trace,

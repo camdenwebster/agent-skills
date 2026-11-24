@@ -12,7 +12,7 @@ const { executionFailure } = require('./lib/execution-status');
 const { codexExecutionFailure, codexUsage } = require('./lib/codex-eval');
 const { execFileSync, spawnSync } = require('node:child_process');
 const { parseGrading } = require('./run-evals');
-const { validateEval } = require('./lib/behavioral-record');
+const { validateEval, INVENTORY_IMPORT_ARTIFACT_PROFILE } = require('./lib/behavioral-record');
 const { codexModelPreflight } = require('./lib/codex-model-preflight');
 const ROOT = path.resolve(__dirname, '..');
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -23,6 +23,7 @@ const observedModel = x => nonempty(x) && !movingModel(x) ? x : null;
 function relative(x) { return nonempty(x) && !path.isAbsolute(x) && !x.includes('\\') && x.split('/').every(p => p && p !== '.' && p !== '..'); }
 function validateSuite(s) {
   if (!s || s.schema_version !== 1 || !nonempty(s.name) || !Array.isArray(s.candidates) || !Array.isArray(s.evals) || !s.evals.length) throw new Error('Invalid Swift benchmark suite');
+  if (s.artifact_profile !== undefined && s.artifact_profile !== INVENTORY_IMPORT_ARTIFACT_PROFILE) throw new Error('Unsupported artifact profile');
   if (s.runtime_profile !== undefined && s.runtime_profile !== 'swiftpm-isolated-v1') throw new Error('Unsupported runtime profile');
   const ids = new Set(['baseline']);
   for (const c of s.candidates) {
@@ -32,6 +33,7 @@ function validateSuite(s) {
   const cases = new Set();
   for (const ev of s.evals) {
     validateEval(ev);
+    if (ev.artifact_profile !== s.artifact_profile) throw new Error('Case artifact profile must match the suite artifact profile');
     if (ev.runtime_profile !== s.runtime_profile) throw new Error('Case runtime profile must match the suite profile');
     if (!Number.isSafeInteger(ev.id) || ev.id < 1 || cases.has(ev.id) || ev.kind !== 'execution' || !ID.test(ev.domain) || !nonempty(ev.prompt) || !nonempty(ev.expected_output) || !ev.files?.length || ev.files.some(f => !relative(f)) || !Array.isArray(ev.critical_expectations) || ev.critical_expectations.some(i => !Number.isInteger(i) || i < 1 || i > ev.expectations.length) || new Set(ev.critical_expectations).size !== ev.critical_expectations.length) throw new Error('Invalid case, fixture path or critical expectation');
     cases.add(ev.id);
@@ -202,7 +204,7 @@ function runComparison(options, hooks = {}) {
   for (const e of suite.evals.filter(e => matrix.some(r => r.case_id === e.id))) for (const rel of e.files) { const source = safePath(path.join(root, 'evals/fixtures'), rel); fixtures.set(rel, source); filesUnder(source); }
   const fixtureFiles = digestFiles(path.join(root, 'evals/fixtures'), [...new Set([...fixtures.values()].flatMap(filesUnder))], true);
   const harnessFiles = digestFiles(path.join(root, 'scripts'), filesUnder(path.join(root, 'scripts')), true);
-  const manifest = { schema_version: 1, engine, exploratory, runtime_profile: suite.runtime_profile || null, harness_sha256: hash(JSON.stringify(harnessFiles)), suite: suite.name, suite_sha256: hash(JSON.stringify(suite)), model, node: process.version, platform: process.platform, safe_mode: true, comparison: 'instructed-content-efficacy-not-routing', isolation_limits: engine === 'codex' ? 'Explicit config disables automatic instruction/catalog/bundled skill, memory, hooks, apps and plugin defaults; user config ignored. Managed policy or other discovery may remain. Workspace-write sandbox; not a total host isolation boundary.' : 'Safe mode disables user customizations; administrator-managed policy and host capabilities may remain. Not a sandbox.', repetitions: runs, candidates: candidates.map(({ source, skill, ...rest }) => rest), fixture_files: fixtureFiles, matrix };
+  const manifest = { schema_version: 1, engine, exploratory, runtime_profile: suite.runtime_profile || null, ...(suite.artifact_profile ? { artifact_profile: suite.artifact_profile } : {}), harness_sha256: hash(JSON.stringify(harnessFiles)), suite: suite.name, suite_sha256: hash(JSON.stringify(suite)), model, node: process.version, platform: process.platform, safe_mode: true, comparison: 'instructed-content-efficacy-not-routing', isolation_limits: engine === 'codex' ? 'Explicit config disables automatic instruction/catalog/bundled skill, memory, hooks, apps and plugin defaults; user config ignored. Managed policy or other discovery may remain. Workspace-write sandbox; not a total host isolation boundary.' : 'Safe mode disables user customizations; administrator-managed policy and host capabilities may remain. Not a sandbox.', repetitions: runs, candidates: candidates.map(({ source, skill, ...rest }) => rest), fixture_files: fixtureFiles, matrix };
   if (dryRun) return { ...manifest, dry_run: true, command: `node <isolated>/scripts/run-evals.js --behavioral swift-benchmark --model <pinned> --eval <case> --record --safe-mode --engine ${engine}` };
   const versions = hooks.versions ? hooks.versions() : probeVersions(undefined, engine);
   const modelPreflight = engine === 'codex' ? (hooks.modelPreflight || codexModelPreflight)(model) : null;

@@ -74,7 +74,7 @@ function runBehavioralWithGrading(root, raw, options = {}) {
   writeSkill(root, 'alpha-skill', 'Handles alpha widgets.');
   const evalCase = completeCase('alpha-skill', 'change alpha widget');
   evalCase.evals = (options.ids || [1]).map((id) => (options.execution
-    ? { ...behavioralEval(), id }
+    ? { ...behavioralEval(), id, ...options.evalOverrides }
     : { ...behavioralEval([]), id, kind: 'dialogue' }));
   writeJson(path.join(root, 'evals', 'cases', 'alpha-skill.json'), evalCase);
   for (const [rel, content] of Object.entries(options.resources || {})) {
@@ -99,6 +99,7 @@ function runBehavioralWithGrading(root, raw, options = {}) {
       if (${JSON.stringify(Boolean(options.requireSafe))}) assert.ok(args.includes('--safe-mode'), 'executor and grader must use safe mode');
       fs.appendFileSync(${JSON.stringify(path.join(root, 'claude-calls.txt'))}, executor ? 'executor\\n' : 'grader\\n');
       if (executor) { ${options.onExecute || ''} }
+      else { ${options.onGrade || ''} }
       if (executor && ${JSON.stringify(Boolean(options.error))}) throw Object.assign(new Error('executor failed'), ${JSON.stringify(options.error || {})});
       return executor ? ${JSON.stringify(options.trace ?? '{"type":"result","subtype":"success","is_error":false,"result":"done"}\n')} : ${JSON.stringify(raw)};
     };
@@ -1514,4 +1515,38 @@ test('historical Codex records cannot silently use the default Claude grader',()
   const bad=run(root,['--behavioral','alpha-skill','--engine','unknown','--dry-run']);
   assert.notEqual(bad.status,0);assert.match(bad.stderr,/engine must be claude or codex/);
  }finally{fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test('opt-in inventory capture supplements legacy evidence before record and grading', () => {
+ const root=makeSandbox();
+ try {
+  fs.writeFileSync(path.join(root,'scripts/lib/inventory-import-submission.js'), `exports.captureInventoryImportSubmission=(workspace,baseline)=>{const git=require('child_process').execFileSync;require('node:assert/strict').equal(git('git',['rev-parse','HEAD'],{cwd:workspace,encoding:'utf8'}).trim(),baseline);return {host_marker:'inventory capture',baseline_commit:baseline};};`);
+  const result=runBehavioralWithGrading(root,passingGrading,{
+   execution:true,args:['--record'],
+   evalOverrides:{artifact_profile:'inventory-import-tests-v1',runtime_profile:'swiftpm-isolated-v1',files:['swift-benchmarks/inventory-import']},
+   resources:{'evals/fixtures/swift-benchmarks/inventory-import/README.md':'Public contract'},
+   onExecute:`fs.writeFileSync(path.join(settings.cwd,'swift-benchmarks/inventory-import/RESULT.md'),'Observed results');`,
+   onGrade:`assert.match(settings.input,/inventory capture/);assert.match(settings.input,/Observed results/);`
+  });
+  assert.equal(result.status,0,result.stdout+result.stderr);
+  const results=path.join(root,'evals/results');
+  const record=JSON.parse(fs.readFileSync(path.join(results,fs.readdirSync(results).find(f=>f.endsWith('.record.json'))),'utf8'));
+  const capture=record.evidence.workspace_evidence;
+  assert.equal(capture.inventory_import_submission.host_marker,'inventory capture');
+  assert.equal(capture.inventory_import_submission.baseline_commit,capture.baseline_commit);
+  assert.ok(capture.files.some(f=>f.path==='swift-benchmarks/inventory-import/RESULT.md'&&f.text==='Observed results'));
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(results,'alpha-skill.eval-1.workspace-evidence.json'),'utf8')),capture);
+ } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test('legacy execution never invokes the opt-in inventory collector', () => {
+ const root=makeSandbox();
+ try {
+  fs.writeFileSync(path.join(root,'scripts/lib/inventory-import-submission.js'),`throw Error('collector must remain opt-in');`);
+  const result=runBehavioralWithGrading(root,passingGrading,{execution:true,args:['--record']});
+  assert.equal(result.status,0,result.stdout+result.stderr);
+  const results=path.join(root,'evals/results');
+  const record=JSON.parse(fs.readFileSync(path.join(results,fs.readdirSync(results).find(f=>f.endsWith('.record.json'))),'utf8'));
+  assert.equal('inventory_import_submission' in record.evidence.workspace_evidence,false);
+ } finally {fs.rmSync(root,{recursive:true,force:true});}
 });

@@ -411,3 +411,5 @@ agent-skills is built and maintained by:
 ## License
 
 MIT - use these skills in your projects, teams, and tools.
+
+The [multi-file Swift Testing evaluation](evals/swift-benchmarks/multifile-testing-design-v1.md) adds one inventory-import regression-writing task with bounded host artifact replay and independent native mutation checks. It preserves existing suites and pins; CI validates its schema and host checks without model calls.

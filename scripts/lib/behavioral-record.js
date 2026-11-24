@@ -60,7 +60,15 @@ function saveRecord(base, evidence) {
   return { file, record };
 }
 
+const INVENTORY_IMPORT_ARTIFACT_PROFILE = 'inventory-import-tests-v1';
+
 function validateEval(ev) {
+  if (ev && ev.artifact_profile !== undefined &&
+      (ev.artifact_profile !== INVENTORY_IMPORT_ARTIFACT_PROFILE ||
+       (ev.kind || 'execution') !== 'execution' || ev.runtime_profile !== 'swiftpm-isolated-v1' ||
+       !Array.isArray(ev.files) || ev.files.length !== 1 || ev.files[0] !== 'swift-benchmarks/inventory-import')) {
+    throw new Error('Unsupported or invalid artifact profile');
+  }
   if (!ev || !Number.isInteger(ev.id) || typeof ev.prompt !== 'string' ||
       typeof ev.expected_output !== 'string' ||
       !['execution', 'dialogue'].includes(ev.kind || 'execution') ||
@@ -139,4 +147,4 @@ function runRegrade(file, rubricFile, { dryRun, model }, grade) {
   return grading.summary.failed ? 1 : 0;
 }
 
-module.exports = { saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged };
+module.exports = { INVENTORY_IMPORT_ARTIFACT_PROFILE, saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged };

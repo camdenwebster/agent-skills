@@ -300,3 +300,37 @@ test('exploratory purpose and catalogue metadata never resolve unknown executor 
  assert.equal(report.exploratory,true);assert.equal(report.runtime_profile,'swiftpm-isolated-v1');assert.deepEqual(report.model_preflight,catalogue);
  assert.equal(report.results[0].status,'scored');assert.equal(report.results[0].observed_executor_model,null);assert.equal(report.comparability.comparable,false);assert.ok(report.comparability.cases[0].reasons.includes('unknown-observed-model'));
 }));
+
+test('inventory artifact profile is explicit, supported and consistent across suite and cases', () => {
+ const profiled = () => { const s=structuredClone(suite());s.runtime_profile='swiftpm-isolated-v1';s.artifact_profile='inventory-import-tests-v1';Object.assign(s.evals[0],{runtime_profile:s.runtime_profile,artifact_profile:s.artifact_profile,files:['swift-benchmarks/inventory-import']});return s; };
+ validateSuite(profiled());
+ for(const mutate of [s=>s.artifact_profile='unknown',s=>s.artifact_profile=null,s=>s.artifact_profile=1,s=>delete s.evals[0].artifact_profile,s=>s.evals[0].artifact_profile='unknown',s=>s.evals[0].artifact_profile={},s=>delete s.artifact_profile,s=>s.evals[0].files=['sample']]) {
+  const s=profiled();mutate(s);assert.throws(()=>validateSuite(s),/artifact profile/i);
+ }
+ const {validateEval}=require('./lib/behavioral-record');
+ for(const profile of [null,1,{},'unknown'])assert.throws(()=>validateEval({...ev,artifact_profile:profile}),/artifact profile/i);
+ assert.throws(()=>validateEval({...profiled().evals[0],kind:'dialogue'}),/artifact profile/i);
+});
+
+test('multifile suite defines one profiled case and preserves testing candidate pins', () => {
+ const dir=path.join(__dirname,'../evals/swift-benchmarks');
+ const s=JSON.parse(fs.readFileSync(path.join(dir,'multifile-testing-v1.json'),'utf8'));
+ const prior=JSON.parse(fs.readFileSync(path.join(dir,'testing-extension.json'),'utf8'));
+ validateSuite(s);assert.deepEqual(s.candidates,prior.candidates);
+ assert.equal(s.evals.length,1);assert.equal(s.evals[0].id,401);
+ assert.equal(s.evals[0].expectations.length,5);
+ assert.equal(s.artifact_profile,'inventory-import-tests-v1');
+ assert.deepEqual(s.evals[0].files,['swift-benchmarks/inventory-import']);
+ assert.doesNotMatch(s.evals[0].prompt,/mutant|mutation|canonical|oracle/i);
+ assert.doesNotMatch(s.evals[0].prompt,/optional/i);
+ assert.match(s.evals[0].prompt,/required .*RESULT\.md/);
+ assert.match(s.evals[0].expectations[4],/required RESULT\.md/);
+ assert.match(s.evals[0].prompt,/plain import InventoryImport/);
+ assert.match(s.evals[0].prompt,/15-minute task budget/);
+ assert.match(s.evals[0].prompt,/conditional compilation/);
+ const contract=fs.readFileSync(path.join(dir,'../fixtures/swift-benchmarks/inventory-import/README.md'),'utf8');
+ assert.match(contract,/Budget: 15 minutes/);
+ assert.match(contract,/plain `import InventoryImport`/);
+ assert.match(contract,/comments and strings/);
+ assert.match(contract,/unqualified evidence/);
+});

@@ -42,9 +42,13 @@ jobs:
           node scripts/run-swift-benchmarks.js --validate
           node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/testing-extension.json --validate
           node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/testing-review-controls-v2.json --validate
+          node scripts/run-swift-benchmarks.js --suite evals/swift-benchmarks/multifile-testing-v1.json --validate
 
       - name: Test Swift comparison runner (stub models only)
         run: node --test scripts/run-swift-benchmarks-test.js scripts/lib/codex-eval-test.js scripts/lib/codex-model-preflight-test.js scripts/lib/workspace-evidence-test.js scripts/validate-swift-testing-extension-test.js
+
+      - name: Test inventory-import host checks (stub Swift, no model calls)
+        run: node --test scripts/lib/inventory-import-submission-test.js scripts/check-inventory-import-test.js
 
       - name: Validate references/ links in skills
         run: node scripts/validate-reference-links.js

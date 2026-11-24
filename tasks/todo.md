@@ -39,3 +39,5 @@ Additional early selection work: [MOV-276 — controlled Swift comparison pilot]
 Evaluation follow-up: [MOV-277 — provenance, SwiftPM setup and deeper testing cases](https://linear.app/mothersound/issue/MOV-277/harden-swift-skill-eval-provenance-and-add-deeper-testing-cases). See the [first live pilot observations](../evals/swift-benchmarks/pilot-results-2026-11-23.md); they are not a skill ranking.
 
 Evaluation calibration: [MOV-278 — remaining testing cases and pinned comparisons](https://linear.app/mothersound/issue/MOV-278/calibrate-remaining-swift-testing-cases-and-compare-pinned-skills). See the [versioned calibration report](../evals/swift-benchmarks/calibration-results-2026-11-23.md); review controls 302/304 are separate changed tasks, not historical regrades.
+
+Representative testing challenge: [MOV-279](https://linear.app/mothersound/issue/MOV-279/add-a-representative-multi-file-swift-testing-challenge-with). See the [multi-file baseline report](../evals/swift-benchmarks/multifile-results-2026-11-23.md): LLM 5/5, three assertion kills and one incomplete mutation, not functionally qualified.
