@@ -1,0 +1,2 @@
+# Inventory lookup core
+Swift tools version 6.0; Swift language mode 6, complete strict concurrency, no default MainActor isolation. Preserve the public async API and value types. No new dependencies or unsafe isolation escapes. The consumer may cancel a lookup when navigation changes. Ordinary provider failures intentionally produce an empty titles result; cancellation must remain observable to the caller. This is a standalone review fixture, not production app code.

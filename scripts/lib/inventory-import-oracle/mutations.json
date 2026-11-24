@@ -1,0 +1,46 @@
+[
+  {
+    "id": "persist-before-validation",
+    "replacements": [
+      [
+        "        let issues = validationIssues(items)\n        guard issues.isEmpty else { throw ImportError.invalidRows(issues) }\n        try Task.checkCancellation()\n        try await store.commit(batchID: batch.id, items: items)",
+        "        try await store.commit(batchID: batch.id, items: items)\n        let issues = validationIssues(items)\n        guard issues.isEmpty else { throw ImportError.invalidRows(issues) }\n        try Task.checkCancellation()"
+      ]
+    ]
+  },
+  {
+    "id": "unstructured-lookup",
+    "replacements": [
+      [
+        "let match = try await catalog.resolve(request)",
+        "let lookup = Task { try await catalog.resolve(request) }\n                    let match = try await lookup.value"
+      ]
+    ]
+  },
+  {
+    "id": "progress-identity",
+    "replacements": [
+      [
+        "sourceID: batch.rows[index].sourceID,\n                    sourceIndex: index, completedCount: completedCount,",
+        "sourceID: batch.rows[completedCount - 1].sourceID,\n                    sourceIndex: completedCount - 1, completedCount: completedCount,"
+      ]
+    ]
+  },
+  {
+    "id": "completion-order",
+    "replacements": [
+      [
+        "var slots = [ImportedItem?](repeating: nil, count: batch.rows.count)",
+        "var completionItems: [ImportedItem] = []"
+      ],
+      [
+        "slots[index] = item",
+        "completionItems.append(item)"
+      ],
+      [
+        "return slots.map { $0! }",
+        "return completionItems"
+      ]
+    ]
+  }
+]

@@ -4,6 +4,11 @@ This file provides guidance to AI coding agents (Claude Code, Cursor, Copilot, A
 
 > **Scope:** This file configures agents working on the [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) repository itself. It is not meant to be copied into other projects or into a global agent configuration; the reusable assets are the skills in `skills/`, not this file.
 
+## Project-local native workflow
+
+For native iOS/Swift work or native workflow integration, read [the native skill routing contract](docs/native-skill-routing.md) before selecting skills or delegating. Use its role/task mapping and exact checked-in `.agents/skills` paths; the Lead must pass the selected paths and this contract to each delegated native task. This project overlay takes precedence over conflicting generic UI mappings or shared role skill preferences. Web-only work retains the existing routing.
+
+
 ## Repository Overview
 
 A collection of skills for Claude.ai and Claude Code for senior software engineers. Skills are packaged instructions and scripts that extend Claude and your coding agents capabilities.

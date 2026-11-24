@@ -1,0 +1,2 @@
+# Import validation test repair
+Run `swift test` in this directory. Swift tools/language version 6.0, no dependencies. `ImportValidator` rejects blank labels and returns trimmed valid labels. Product behavior is already correct; this task concerns tests. Keep the public product API and add no dependency. The test must finish only after its assertions have run. Record what the test run actually executed.

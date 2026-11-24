@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "name": "swift-testing-extension-v1",
+  "runtime_profile": "swiftpm-isolated-v1",
+  "candidates": [
+    {
+      "id": "avdlee-testing",
+      "repository": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "revision": "798e9b1a2bcac164d4f0c781908199e754f0bab6",
+      "license": "MIT",
+      "skill_path": "swift-testing-expert",
+      "domains": [
+        "testing"
+      ]
+    },
+    {
+      "id": "hudson-testing-compat",
+      "repository": "https://github.com/twostraws/Swift-Testing-Agent-Skill",
+      "revision": "3d434c7d81f35e5726d4363fc30260735d541c2f",
+      "license": "MIT",
+      "skill_path": "swift-testing-pro",
+      "domains": [
+        "testing"
+      ],
+      "role": "Swift Testing; historical pre-marketplace compatibility snapshot"
+    },
+    {
+      "id": "axiom-testing",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-testing",
+      "domains": [
+        "testing"
+      ],
+      "role": "Native testing topic bundle; local references available"
+    }
+  ],
+  "evals": [
+    {
+      "id": 201,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/import-events/README.md. Repair the async event-confirmation test so its verification is reliable. Keep product behavior and public APIs unchanged. Use the supplied verification command and write RESULT.md with actual evidence and any source/verification limitations. Write the result at swift-benchmarks/testing-extension/import-events/RESULT.md.",
+      "expected_output": "Confirmation observes the required events before its body returns, without escaping work.",
+      "files": [
+        "swift-benchmarks/testing-extension/import-events"
+      ],
+      "expectations": [
+        "The confirmation body owns completion: required events are produced and all work using its confirmation is awaited before that body returns. The closed gate is not opened only after the confirmation ends.",
+        "The two-label and zero-label coverage and product API/behavior are preserved. Confirmations are not removed, reduced, marked known failures, skipped or disabled; sleeps, yields, locks, or global serialization do not mask the defect.",
+        "The supplied run-tests.sh is actually executed on an available Swift host; real Swift Testing completion is distinguished from XCTest zero-test output and setup failures. The resulting two test functions pass after a correct repair.",
+        "Any API-semantic claim is grounded in authoritative documentation or accompanied by an explicit source/verification limitation; merely executing one schedule is not treated as proof of an API guarantee.",
+        "Tool results show the supplied source was read, a genuine test repair was made, and a task-specific RESULT.md was written in this fixture with truthful outcome and command."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 202,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/scan-events/README.md. Review async event-confirmation coverage and lifetime boundaries; report only source-supported defects. Keep product behavior and public APIs unchanged. Use the supplied verification command and write RESULT.md with actual evidence and any source/verification limitations. Write the result at swift-benchmarks/testing-extension/scan-events/RESULT.md.",
+      "expected_output": "Valid awaited confirmation tests are preserved without invented faults.",
+      "files": [
+        "swift-benchmarks/testing-extension/scan-events"
+      ],
+      "expectations": [
+        "The review recognizes that importLabels is awaited inside each confirmation and that the expected two-event and zero-event checks finish within those bodies; no escaping-work defect is invented.",
+        "Valid product/test source is left intact, including both confirmations and their event counts. No framework migration, skips, sleeps, locks, or global test serialization is introduced.",
+        "The supplied run-tests.sh is executed when Swift is available and its actual two-test-function completion is described accurately; setup failures or unavailable tooling are reported as such rather than fabricated passes.",
+        "Any API-semantic claim is grounded in authoritative documentation or an explicit source/verification limitation, and a single observed ordering is not mistaken for a guarantee.",
+        "Tool results show relevant supplied files were read and task-specific RESULT.md was written in this fixture explaining the conclusion and actual evidence."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 203,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/label-lookup/README.md. Repair the test dependency isolation while retaining the independent-formatter assertions and parameterized coverage. Keep product behavior and public APIs unchanged. Use the supplied verification command and write RESULT.md with actual evidence and any source/verification limitations. Write the result at swift-benchmarks/testing-extension/label-lookup/RESULT.md.",
+      "expected_output": "Independent injected fixtures retain their configured results without shared mutable stub state.",
+      "files": [
+        "swift-benchmarks/testing-extension/label-lookup"
+      ],
+      "expectations": [
+        "Each makeFormatter call uses its own injected lookup state so creating a second formatter cannot overwrite the first. The deterministic independentFormattersKeepTheirInjectedValues assertion is genuinely repaired, not only serialized.",
+        "Both independent formatter assertions and all three Desk/Lamp/Chair parameterized inputs remain meaningful and enabled. Product API/behavior is unchanged; expected outputs are not rewritten to accept shared-state leakage.",
+        "The supplied run-tests.sh is actually executed when Swift is available, two test functions complete successfully, and the three parameter argument invocations are distinguished from function counts. No zero-test or incomplete run is claimed as a pass.",
+        "No sleeps, yields, unchecked Sendable escape, test-order assumptions, process-global state reset protocol, or blanket serialization is used as a substitute for isolated injected dependencies. API claims have source support or explicit verification limits.",
+        "Tool results show supplied product and test files were read, an actual isolated-fixture repair was made and task-specific RESULT.md was written in this fixture with truthful verification evidence."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 204,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/location-lookup/README.md. Review test dependency isolation and parameterized coverage; report only source-supported defects. Keep product behavior and public APIs unchanged. Use the supplied verification command and write RESULT.md with actual evidence and any source/verification limitations. Write the result at swift-benchmarks/testing-extension/location-lookup/RESULT.md.",
+      "expected_output": "Independent injected state and parameterized coverage are correctly retained.",
+      "files": [
+        "swift-benchmarks/testing-extension/location-lookup"
+      ],
+      "expectations": [
+        "The review recognizes that each makeFormatter call creates a separate LookupStub captured by that formatter; neither shared test state nor a cross-case race is invented.",
+        "Valid product/test source is left intact, including both independent formatter assertions and the three Desk/Lamp/Chair parameter rows. No skipped tests, weakened assertions, framework migration or serialization workaround is introduced.",
+        "The supplied run-tests.sh is executed when Swift is available and actual completion is reported accurately: two test functions and three parameter argument invocations, not five separate test functions.",
+        "Dependency injection and actor isolation are assessed separately: use of an actor does not by itself make shared mutable test state independent. Semantic claims have authoritative source support or explicit source/verification limitations.",
+        "Tool results show supplied files were read and task-specific RESULT.md was written in this fixture explaining the assessment and actual verification evidence."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    }
+  ]
+}

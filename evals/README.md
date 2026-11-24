@@ -176,3 +176,9 @@ Every skill ships with an eval file. When you add `skills/<name>/`, add `evals/c
 ## Metrics to watch
 
 The Tier-2 run prints a **trigger rank-1 rate** (share of positive prompts that rank their skill first, not merely top-k). CI runs with `--min-rank1 95`, leaving useful headroom below the checked-in 100% baseline so an unrelated description edit does not immediately turn CI red. Raise the floor as routing improves; never lower it to make a regression pass. Falling numbers mean descriptions are drifting toward each other. The collision check errors at ≥75% pairwise description similarity and warns at ≥50%. When these evals surface a description-vocabulary gap (see [#351](https://github.com/addyosmani/agent-skills/issues/351) for the original examples), fix the description, not the prompt.
+
+## Swift skill comparisons (fork)
+
+See [Swift skill comparison pilot](swift-benchmarks/README.md) for independently authored native cases and a pinned-candidate/no-skill-baseline comparison using this behavioral harness. It is separate from the catalog's routing suite; validation and dry-run make no model calls, while real comparisons are opt-in and incur usage.
+
+The fork behavioral runner accepts `--engine claude|codex` (Claude by default). Codex campaigns use native JSON event validation and an engine-specific structured grader. Runtime/model cohorts are distinct; see the Swift pilot guide for isolation and evidence limits.

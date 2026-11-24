@@ -60,7 +60,15 @@ function saveRecord(base, evidence) {
   return { file, record };
 }
 
+const INVENTORY_IMPORT_ARTIFACT_PROFILE = 'inventory-import-tests-v1';
+
 function validateEval(ev) {
+  if (ev && ev.artifact_profile !== undefined &&
+      (ev.artifact_profile !== INVENTORY_IMPORT_ARTIFACT_PROFILE ||
+       (ev.kind || 'execution') !== 'execution' || ev.runtime_profile !== 'swiftpm-isolated-v1' ||
+       !Array.isArray(ev.files) || ev.files.length !== 1 || ev.files[0] !== 'swift-benchmarks/inventory-import')) {
+    throw new Error('Unsupported or invalid artifact profile');
+  }
   if (!ev || !Number.isInteger(ev.id) || typeof ev.prompt !== 'string' ||
       typeof ev.expected_output !== 'string' ||
       !['execution', 'dialogue'].includes(ev.kind || 'execution') ||
@@ -107,12 +115,12 @@ function gradeRecorded(file, record, ev, model, historical, grade) {
     rubric: ev,
     requested_model: model || null,
     grader_model: 'unknown',
-    claude_version: claudeVersion(),
+    ...(record.evidence.run.engine === 'codex' ? { engine: 'codex', codex_version: (() => { try { return execFileSync('codex', ['--version'], { encoding: 'utf8', timeout: 10000 }).trim(); } catch { return null; } })() } : { claude_version: claudeVersion() }),
     timestamp: new Date().toISOString(),
   };
   let outcome;
   try {
-    outcome = grade(record.evidence.trace, ev, model);
+    outcome = grade(record.evidence.trace, ev, model, record.evidence.workspace_evidence);
     Object.assign(attempt, { status: outcome.grading ? 'graded' : 'invalid', ...outcome });
   } catch (error) {
     attempt.status = 'error';
@@ -139,4 +147,4 @@ function runRegrade(file, rubricFile, { dryRun, model }, grade) {
   return grading.summary.failed ? 1 : 0;
 }
 
-module.exports = { saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged };
+module.exports = { INVENTORY_IMPORT_ARTIFACT_PROFILE, saveRecord, gradeRecorded, runRegrade, claudeVersion, validateEval, listStaged };

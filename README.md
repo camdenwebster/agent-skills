@@ -1,5 +1,7 @@
 # Agent Skills
 
+This fork also has a [project-local native workflow](docs/native-skill-routing.md): six pinned Swift/iOS specialists are routed by task for agents working in this checkout. This is separate from the reusable root plugin catalog.
+
 **Production-grade engineering skills for AI coding agents.**
 
 Skills encode the workflows, quality gates, and best practices that senior engineers use when building software. These ones are packaged so AI agents follow them consistently across every phase of development.
@@ -411,3 +413,5 @@ agent-skills is built and maintained by:
 ## License
 
 MIT - use these skills in your projects, teams, and tools.
+
+The [multi-file Swift Testing evaluation](evals/swift-benchmarks/multifile-testing-design-v1.md) adds one inventory-import regression-writing task with bounded host artifact replay and independent native mutation checks. It preserves existing suites and pins; CI validates its schema and host checks without model calls.

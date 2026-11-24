@@ -1,0 +1,2 @@
+# Inventory list UI review
+Swift 6 language mode, iOS 18 deployment target, SwiftUI and Observation. Follow existing composition; do not introduce an application architecture, state library or package split. Source review is available; no app target, simulator capture or performance trace is supplied. Do not report a compile/run/audit you have not performed. Item identity must survive filtering, sorting and row editing.
