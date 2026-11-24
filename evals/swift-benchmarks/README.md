@@ -1,5 +1,7 @@
 # Swift skill comparison pilot
 
+Current policy: comparisons are **on demand**. Use the [qualitative starting set](../../tasks/swift-starting-set.md) for initial adoption and the [short runbook](on-demand.md) when a concrete question warrants an eval. Case 401 adds [multi-file testing with native mutation replay](multifile-testing-design-v1.md); see its [baseline findings](multifile-results-2026-11-23.md).
+
 These independently authored cases help select Swift guidance for our native adaptation work. They reuse the existing behavioral evaluation runner and its recorded execution/LLM grading, but compare different **instructed skill contents on the same tasks**. They do not measure automatic skill discovery, entire ecosystems, or real-device usability.
 
 The pilot contains 16 cases across eight domains. Each domain has a defect/pressure case and a clean or bounded-evidence control. Controls are not identified as such in executor prompts. An instruction to fix a concrete defect is separate from a request to assess a proposal. Grader expectations are not appended to executor prompts.
