@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "name": "swift-testing-review-controls-v2",
+  "runtime_profile": "swiftpm-isolated-v1",
+  "authorship": "Separately versioned review contracts authored after inspecting original calibration outputs and candidate sources; not blind held-out evidence. Reuses unchanged source fixtures and candidate pins.",
+  "candidates": [
+    {
+      "id": "avdlee-testing",
+      "repository": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "revision": "798e9b1a2bcac164d4f0c781908199e754f0bab6",
+      "license": "MIT",
+      "skill_path": "swift-testing-expert",
+      "domains": [
+        "testing"
+      ]
+    },
+    {
+      "id": "hudson-testing-compat",
+      "repository": "https://github.com/twostraws/Swift-Testing-Agent-Skill",
+      "revision": "3d434c7d81f35e5726d4363fc30260735d541c2f",
+      "license": "MIT",
+      "skill_path": "swift-testing-pro",
+      "domains": [
+        "testing"
+      ],
+      "role": "Swift Testing; historical pre-marketplace compatibility snapshot"
+    },
+    {
+      "id": "axiom-testing",
+      "repository": "https://github.com/CharlesWiltgen/Axiom",
+      "revision": "ffafd3b3e0dbaaa60b753ca4a835ae6603b873e1",
+      "license": "MIT",
+      "skill_path": "axiom-codex/skills/axiom-testing",
+      "domains": [
+        "testing"
+      ],
+      "role": "Native testing topic bundle; local references available"
+    }
+  ],
+  "evals": [
+    {
+      "id": 302,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/scan-events/README.md. For this task, assess only whether the existing confirmation bodies own all event-producing async work and verify their declared callback counts for the non-empty and empty inputs. Payload-identity assertions are outside this requested contract; any such coverage suggestion must be labeled optional and nonblocking, not presented as a defect in the requested contract. This is a review-only task. Leave every supplied product, test, package manifest, README and runner file byte-for-byte unchanged; do not add tests or other source files. The only authored deliverable is RESULT.md at the requested fixture path; running the supplied command may create generated .build artifacts. Run ./run-tests.sh from the fixture directory exactly once. A second invocation is allowed only after an observed setup failure, with the setup failure and reason for retry documented; do not repeat a successful run. Report the exact command, real completion or failure evidence, test-function counts separately from parameter argument invocations, and source/verification limitations. Ground API-semantic claims in authoritative documentation when available; otherwise state the limitation. Do not infer an ordering guarantee from one run. Write swift-benchmarks/testing-extension/scan-events/RESULT.md.",
+      "expected_output": "A review-only assessment of confirmation lifetime and the declared two-event/zero-event contract, with supplied source unchanged.",
+      "files": [
+        "swift-benchmarks/testing-extension/scan-events"
+      ],
+      "expectations": [
+        "The review correctly recognizes that each confirmation body awaits importLabels and its synchronous callbacks; the declared two-event and zero-event checks finish within their bodies. No escaping-work or count-contract defect is invented. Any payload-identity coverage suggestion is explicitly optional/nonblocking and outside the requested contract.",
+        "All supplied product, test, manifest, README and runner files remain byte-for-byte unchanged, and no tests or other source files are added. Only fixture RESULT.md and generated .build artifacts may be created.",
+        "Exactly one ./run-tests.sh invocation is made, unless an observed setup failure justifies one documented retry; a successful run is not repeated. Actual Swift Testing completion is described accurately as two test functions with no parameter argument invocations. Setup failures, zero-test preambles and incomplete runs are not fabricated as passes.",
+        "API-semantic claims cite authoritative documentation when available or state explicit source/verification limits. An observed event ordering is not described as an ordering guarantee, and optional coverage ideas are not confused with the requested contract.",
+        "Tool results show the relevant supplied files were read and the required fixture RESULT.md was actually written with the assessment, exact verification command, truthful evidence and any limits. Narration without those artifacts is insufficient."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": 304,
+      "domain": "testing",
+      "kind": "execution",
+      "runtime_profile": "swiftpm-isolated-v1",
+      "prompt": "Read swift-benchmarks/testing-extension/location-lookup/README.md. Assess the existing dependency isolation and parameterized coverage. Explain separately (a) what actor isolation establishes about access to mutable state and (b) what allocation/ownership and injected closure capture establish about independence between formatter/test instances; do not conflate these properties. Preserve the two independent-formatter assertions and all three Desk/Lamp/Chair inputs. Distinguish two test functions from three parameter argument invocations in the verification report. This is a review-only task. Leave every supplied product, test, package manifest, README and runner file byte-for-byte unchanged; do not add tests or other source files. The only authored deliverable is RESULT.md at the requested fixture path; running the supplied command may create generated .build artifacts. Run ./run-tests.sh from the fixture directory exactly once. A second invocation is allowed only after an observed setup failure, with the setup failure and reason for retry documented; do not repeat a successful run. Report the exact command, real completion or failure evidence, test-function counts separately from parameter argument invocations, and source/verification limitations. Ground API-semantic claims in authoritative documentation when available; otherwise state the limitation. Do not infer an ordering guarantee from one run. Write swift-benchmarks/testing-extension/location-lookup/RESULT.md.",
+      "expected_output": "A review-only assessment distinguishing actor access isolation from per-formatter state independence, preserving source and reporting exact execution counts.",
+      "files": [
+        "swift-benchmarks/testing-extension/location-lookup"
+      ],
+      "expectations": [
+        "The review correctly recognizes that each makeFormatter call creates a separate LookupStub captured by that formatter. No shared test state, cross-case race or dependency-independence defect is invented; both independent assertions and all three parameter inputs are recognized.",
+        "All supplied product, test, manifest, README and runner files remain byte-for-byte unchanged, and no tests or other source files are added. Only fixture RESULT.md and generated .build artifacts may be created.",
+        "Exactly one ./run-tests.sh invocation is made, unless an observed setup failure justifies one documented retry; a successful run is not repeated. Actual completion is described accurately as two test functions and three Desk/Lamp/Chair parameter argument invocations, not five test functions. Setup failures, zero-test preambles and incomplete runs are not fabricated as passes.",
+        "The report separately assesses actor isolation of mutable-state access and the per-formatter allocation/ownership/injected capture that makes state independent. It does not claim actor serialization alone would make a shared mutable stub independent. API-semantic claims have authoritative source support or explicit source/verification limits; observed ordering is not claimed as a guarantee.",
+        "Tool results show the relevant supplied product/test files were read and the required fixture RESULT.md was actually written with the assessment, separate actor/ownership analysis, exact verification command, truthful counts/evidence and limits. Narration without those artifacts is insufficient."
+      ],
+      "critical_expectations": [
+        1,
+        2,
+        5
+      ]
+    }
+  ]
+}

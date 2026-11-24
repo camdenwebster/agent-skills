@@ -93,6 +93,14 @@ node scripts/validate-swift-testing-extension.js
 
 This runs the confirmation defect/control, dependency defect/control and canonical repairs with Swift. The confirmation defect fails with a closed actor gate, without sleeps or scheduling assumptions. The dependency negative probe filters `independentFormattersKeepTheirInjectedValues` so parallel parameterized cases cannot accidentally reset the shared stub and hide its failure. Canonical repair and valid controls run their full suites. Completion counts and parameter markers are checked separately: two test functions can include three argument invocations. This qualifies the fixture and canonical repair, not an arbitrary agent-generated repair; the live grader still requires manual evidence review. CI runs only stub/unit coverage and suite validation, requiring neither Swift nor paid model calls.
 
+## Clarified review controls (MOV-278)
+
+See the [calibration and comparison report](calibration-results-2026-11-23.md) for the preserved raw grades, audit qualifications and completed comparison observations.
+
+Baseline calibration exposed ambiguous review/edit scope in case 202 and an actor-versus-ownership reporting obligation not explicit in case 204. Their raw grades and original suite are preserved. Use [review-controls v2](testing-review-controls-v2.json), cases 302/304, for new comparisons of these review tasks. The versioned prompts explicitly require source preservation, distinguish optional payload coverage from the requested count/lifetime contract, request actor/ownership analysis where scored, and bound successful native verification to one command invocation. These are changed tasks authored after inspecting calibration outputs and candidate sources, not blind held-out cases. Do not pool their scores with cases 202/204.
+
+The new suite reuses unchanged Swift fixtures, candidate pins and runtime profile; no runner or native fixture modification is involved. Select it with `--suite evals/swift-benchmarks/testing-review-controls-v2.json`. The dependency repair remains case 203 in `testing-extension.json`.
+
 ## Codex availability and model provenance
 
 Live Codex comparisons now require `--exploratory`, acknowledging that `codex exec --json` may omit resolved model identity. The flag records campaign purpose and **never changes** strict comparability. Unknown identities remain null/non-comparable; historical records and grades are not rewritten.

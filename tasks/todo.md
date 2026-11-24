@@ -37,3 +37,5 @@ Work the unblocked frontier, starting with MOV-251. Preserve M1/M2/M3 evidence r
 Additional early selection work: [MOV-276 — controlled Swift comparison pilot](https://linear.app/mothersound/issue/MOV-276/create-a-controlled-swift-skill-comparison-benchmark-pilot). This supplements the original plan and is independent of MOV-275's final integration gate.
 
 Evaluation follow-up: [MOV-277 — provenance, SwiftPM setup and deeper testing cases](https://linear.app/mothersound/issue/MOV-277/harden-swift-skill-eval-provenance-and-add-deeper-testing-cases). See the [first live pilot observations](../evals/swift-benchmarks/pilot-results-2026-11-23.md); they are not a skill ranking.
+
+Evaluation calibration: [MOV-278 — remaining testing cases and pinned comparisons](https://linear.app/mothersound/issue/MOV-278/calibrate-remaining-swift-testing-cases-and-compare-pinned-skills). See the [versioned calibration report](../evals/swift-benchmarks/calibration-results-2026-11-23.md); review controls 302/304 are separate changed tasks, not historical regrades.
